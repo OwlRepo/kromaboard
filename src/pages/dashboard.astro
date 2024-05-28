@@ -1,0 +1,17 @@
+---
+import {UserDropdownMenu,MobileNavSheet,NavBar} from "@/components/custom/navigation";
+import '@/styles/globals.css'
+
+---
+
+<html lang="en">
+ <head>
+  <title>Dashboard | IMBOARD</title>
+ </head>
+ <body>
+    <NavBar>
+        <MobileNavSheet client:only="vue" slot="mobile-nav-sheet"/>
+        <UserDropdownMenu client:only="vue" slot="user-dropdown-menu"/>
+    </NavBar>
+ </body>
+</html>
