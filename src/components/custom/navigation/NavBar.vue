@@ -1,14 +1,5 @@
 <script setup lang="ts">
-import {
-  Bell,
-  Home,
-  LineChart,
-  Package,
-  Package2,
-  Search,
-  ShoppingCart,
-  Users,
-} from "lucide-vue-next";
+import { Bell, Package2, Search } from "lucide-vue-next";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -28,7 +19,7 @@ const currentRoute = computed(() => window.location.pathname);
 
 <template>
   <div
-    class="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]"
+    class="grid max-h-screen min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]"
   >
     <div class="hidden border-r bg-muted/40 md:block">
       <div class="flex h-full max-h-screen flex-col gap-2">
@@ -82,7 +73,7 @@ const currentRoute = computed(() => window.location.pathname);
         </div>
         <slot name="user-dropdown-menu"></slot>
       </header>
-      <main class="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
+      <main class="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 bg-muted">
         <slot></slot>
       </main>
     </div>
