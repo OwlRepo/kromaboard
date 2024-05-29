@@ -57,8 +57,10 @@ import DateRangePicker from "@/components/custom/form/DateRangePicker.vue";
                         class="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground"
                       />
                       <Input
+                        name="search"
                         type="search"
                         placeholder="Search products..."
+                        aria-label="search"
                         class="w-full appearance-none bg-background pl-8 shadow-none"
                       />
                     </div>
@@ -87,18 +89,18 @@ import DateRangePicker from "@/components/custom/form/DateRangePicker.vue";
                     <div class="flex flex-col space-y-2 xl:space-y-0  xl:flex-row xl:space-x-10">
                       <div class="flex flex-col space-y-2">
                         <div>
-                          <Checkbox id="terms" />
+                          <Checkbox id="success" name="success" aria-label="success" />
                           <label
-                            for="terms"
+                            for="success"
                             class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                           >
                             Success
                           </label>
                         </div>
                         <div>
-                          <Checkbox id="terms" />
+                          <Checkbox id="failed" name="failed" aria-label="failed"/>
                           <label
-                            for="terms"
+                            for="failed"
                             class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                           >
                             Failed
@@ -107,18 +109,18 @@ import DateRangePicker from "@/components/custom/form/DateRangePicker.vue";
                       </div>
                       <div class="flex flex-col space-y-2">
                         <div>
-                          <Checkbox id="terms" />
+                          <Checkbox name="pending" id="pending" aria-label="pending"/>
                           <label
-                            for="terms"
+                            for="pending"
                             class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                           >
                             Pending
                           </label>
                         </div>
                         <div>
-                          <Checkbox id="terms" />
+                          <Checkbox name="refunded" id="refunded" aria-label="refunded"/>
                           <label
-                            for="terms"
+                            for="refunded"
                             class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                           >
                             Refunded
