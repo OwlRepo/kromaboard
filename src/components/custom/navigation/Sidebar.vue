@@ -1,8 +1,9 @@
 <script setup>
 import { LOGGED_IN_ROUTES } from "@/constants";
-import { computed } from "vue";
 
-const currentRoute = computed(() => window.location.pathname);
+defineProps({
+  currentRoute: String,
+});
 </script>
 
 <template>
@@ -11,12 +12,22 @@ const currentRoute = computed(() => window.location.pathname);
       v-for="route in LOGGED_IN_ROUTES"
       :key="route.path"
       :href="route.path"
-      class="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
+      class="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2"
       :class="{
-        'bg-muted text-black': currentRoute.includes(route.path),
+        'bg-muted text-foreground': currentRoute.includes(route.path),
+        'text-muted-foreground hover:text-foreground': !currentRoute.includes(
+          route.path
+        ),
       }"
     >
-      {{ route.name }}</a
-    >
+      <component
+        :is="route.icon"
+        class="w-4"
+        :class="{
+          'bg-muted text-foreground': currentRoute.includes(route.path),
+        }"
+      />
+      {{ route.name }}
+    </a>
   </nav>
 </template>

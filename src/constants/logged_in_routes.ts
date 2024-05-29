@@ -1,4 +1,4 @@
-import { Home, LineChart, Package, ShoppingCart, Users } from "lucide-vue-next";
+import { Home, LineChart, Package, ArrowLeftRight } from "lucide-vue-next";
 
 type LoggedInRoute = {
   name: string;
@@ -13,19 +13,14 @@ const LOGGED_IN_ROUTES: Array<LoggedInRoute> = [
     icon: Home,
   },
   {
-    name: "Orders",
-    path: "/orders",
-    icon: ShoppingCart,
+    name: "Transactions",
+    path: "/transactions",
+    icon: ArrowLeftRight,
   },
   {
     name: "Products",
     path: "/products",
     icon: Package,
-  },
-  {
-    name: "Customers",
-    path: "/customers",
-    icon: Users,
   },
   {
     name: "Reports",

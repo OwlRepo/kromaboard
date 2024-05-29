@@ -1,15 +1,6 @@
 <script setup lang="ts">
-import {
-  Home,
-  LineChart,
-  Menu,
-  Package,
-  Package2,
-  ShoppingCart,
-  Users,
-} from "lucide-vue-next";
+import { Menu, Package2 } from "lucide-vue-next";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -20,9 +11,10 @@ import {
 } from "@/components/ui/card";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { LOGGED_IN_ROUTES } from "@/constants";
-import { computed } from "vue";
 
-const currentRoute = computed(() => window.location.pathname);
+defineProps({
+  currentRoute: String,
+});
 </script>
 
 <template>
@@ -42,17 +34,27 @@ const currentRoute = computed(() => window.location.pathname);
           <Package2 class="h-6 w-6" />
           <span class="sr-only">imboard</span>
         </a>
+
         <a
           v-for="route in LOGGED_IN_ROUTES"
           :key="route.path"
           :href="route.path"
-          class="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
+          class="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2"
           :class="{
-            'bg-muted text-black': currentRoute.includes(route.path),
+            'bg-muted text-foreground': currentRoute.includes(route.path),
+            'text-muted-foreground hover:text-foreground':
+              !currentRoute.includes(route.path),
           }"
         >
-          {{ route.name }}</a
-        >
+          <component
+            :is="route.icon"
+            class="w-4"
+            :class="{
+              'bg-muted text-foreground': currentRoute.includes(route.path),
+            }"
+          />
+          {{ route.name }}
+        </a>
       </nav>
       <div class="mt-auto">
         <Card>
