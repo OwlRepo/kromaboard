@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { Bell, Package2, Search } from "lucide-vue-next";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,7 +10,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { LOGGED_IN_ROUTES } from "@/constants";
 import { computed } from "vue";
 
 const currentRoute = computed(() => window.location.pathname);
