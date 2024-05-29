@@ -1,0 +1,19 @@
+---
+import { MobileNavSheet, NavBar, UserDropdownMenu,Sidebar } from "@/components/custom/navigation";
+
+
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+     <NavBar >
+        <Sidebar slot="side-bar" client:only="vue"/>
+        <UserDropdownMenu slot="user-dropdown-menu" client:visible />
+        <MobileNavSheet slot="mobile-nav-sheet" client:visible/>
+        <slot/>
+     </NavBar>
+  </body>
+</html>

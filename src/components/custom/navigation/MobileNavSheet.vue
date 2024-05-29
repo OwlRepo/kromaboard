@@ -1,13 +1,10 @@
 <script setup lang="ts">
 import {
-  Bell,
-  CircleUser,
   Home,
   LineChart,
   Menu,
   Package,
   Package2,
-  Search,
   ShoppingCart,
   Users,
 } from "lucide-vue-next";
@@ -22,6 +19,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { LOGGED_IN_ROUTES } from "@/constants";
+import { computed } from "vue";
+
+const currentRoute = computed(() => window.location.pathname);
 </script>
 
 <template>
@@ -42,56 +43,28 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
           <span class="sr-only">imboard</span>
         </a>
         <a
-          href="/dashboard"
+          v-for="route in LOGGED_IN_ROUTES"
+          :key="route.path"
+          :href="route.path"
           class="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
+          :class="{
+            'bg-muted text-black': currentRoute.includes(route.path),
+          }"
         >
-          <Home class="h-5 w-5" />
-          Dashboard
-        </a>
-        <a
-          href="/dashboard"
-          class="mx-[-0.65rem] flex items-center gap-4 rounded-xl bg-muted px-3 py-2 text-foreground hover:text-foreground"
+          {{ route.name }}</a
         >
-          <ShoppingCart class="h-5 w-5" />
-          Orders
-          <Badge
-            class="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full"
-          >
-            6
-          </Badge>
-        </a>
-        <a
-          href="/dashboard"
-          class="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-        >
-          <Package class="h-5 w-5" />
-          Products
-        </a>
-        <a
-          href="/dashboard"
-          class="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-        >
-          <Users class="h-5 w-5" />
-          Customers
-        </a>
-        <a
-          href="/dashboard"
-          class="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-        >
-          <LineChart class="h-5 w-5" />
-          Analytics
-        </a>
       </nav>
       <div class="mt-auto">
         <Card>
           <CardHeader>
-            <CardTitle>Upgrade to Pro</CardTitle>
+            <CardTitle>Check Plugins</CardTitle>
             <CardDescription>
-              Unlock all features and get unlimited access to our support team.
+              See the collection of our plugins that you might need and only use
+              what you need
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Button size="sm" class="w-full"> Upgrade </Button>
+            <Button size="sm" class="w-full"> Marketplace </Button>
           </CardContent>
         </Card>
       </div>

@@ -1,7 +1,6 @@
 ---
-import {UserDropdownMenu,MobileNavSheet,NavBar} from "@/components/custom/navigation";
 import '@/styles/globals.css'
-
+import Dashboard from '@/layouts/Dashboard.astro'
 ---
 
 <html lang="en">
@@ -9,9 +8,8 @@ import '@/styles/globals.css'
   <title>Dashboard | IMBOARD</title>
  </head>
  <body>
-    <NavBar>
-        <MobileNavSheet client:only="vue" slot="mobile-nav-sheet"/>
-        <UserDropdownMenu client:only="vue" slot="user-dropdown-menu"/>
-    </NavBar>
+    <Dashboard>
+        content goes here
+    </Dashboard>
  </body>
 </html>
