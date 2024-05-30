@@ -19,7 +19,7 @@ import { cn } from "@/lib/utils";
 import dayjs from "dayjs";
 
 const df = new DateFormatter("en-US", {
-  dateStyle: "medium",
+  dateStyle: "short",
 });
 
 const value = ref({
