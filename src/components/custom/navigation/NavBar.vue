@@ -54,7 +54,7 @@ const currentRoute = computed(() => window.location.pathname);
       <header
         class="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6"
       >
-        <slot name="mobile-nav-sheet"></slot>
+        <slot name="mobile-nav-sheet" />
         <div class="w-full flex-1">
           <form>
             <div class="relative">
@@ -72,7 +72,7 @@ const currentRoute = computed(() => window.location.pathname);
             </div>
           </form>
         </div>
-        <slot name="user-dropdown-menu"></slot>
+        <slot name="user-dropdown-menu" />
       </header>
       <main class="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 bg-muted">
         <slot></slot>

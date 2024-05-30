@@ -1,18 +1,7 @@
 ---
 import "@/styles/globals.css";
 import Dashboard from "@/layouts/Dashboard.astro";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Plus, Search } from "lucide-vue-next";
-import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
-import DateRangePicker from "@/components/custom/form/DateRangePicker.vue";
+import {Search,Filter,Table} from "@/components/custom/transactions";
 ---
 
 <html lang="en">
@@ -21,120 +10,17 @@ import DateRangePicker from "@/components/custom/form/DateRangePicker.vue";
   </head>
   <body>
     <Dashboard>
-      <>
+      <div>
         <div class="flex justify-end">
           <div class="grid grid-cols-1 gap-6 xl:grid-cols-4 w-full">
-            <Card class="xl:col-span-3">
-              <CardHeader class="flex flex-row items-center justify-between">
-                <div class="grid gap-2">
-                  <CardTitle>Transactions</CardTitle>
-                  <CardDescription>
-                    Recent transactions from your store.
-                  </CardDescription>
-                </div>
-                <Button size="sm" class="w-fit space-x-2">
-                  <span>New Transaction</span>
-                  <Plus class="h-4 w-4" />
-                </Button>
-              </CardHeader>
-              <CardContent />
-            </Card>
-
+            <Table/>
             <div class="flex flex-col space-y-6 xl:col-span-1">
-              <Card>
-                <CardHeader class="flex flex-row items-center justify-between">
-                  <div class="grid gap-2">
-                    <CardTitle>Search</CardTitle>
-                    <CardDescription>
-                      Search transactions by product.
-                    </CardDescription>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <form>
-                    <div class="relative">
-                      <Search
-                        class="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground"
-                      />
-                      <Input
-                        name="search"
-                        type="search"
-                        placeholder="Search products..."
-                        aria-label="search"
-                        class="w-full appearance-none bg-background pl-8 shadow-none"
-                      />
-                    </div>
-                  </form>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader class="flex flex-row items-center justify-between">
-                  <div class="grid gap-2">
-                    <CardTitle>Filter</CardTitle>
-                    <CardDescription>
-                      Filter by date, status or product.
-                    </CardDescription>
-                  </div>
-                </CardHeader>
-                <CardContent class="flex flex-col space-y-6 items-stretch">
-                  <div class="flex flex-col space-y-2">
-                    <b>Transaction Date</b>
-                    <div class="flex flex-row items-center">
-                      <DateRangePicker client:visible/>
-                    </div>
-                  </div>
-                  <div class="flex flex-col space-y-2">
-                    <b>Status</b>
-                    <div class="flex flex-col space-y-2 xl:space-y-0  xl:flex-row xl:space-x-10">
-                      <div class="flex flex-col space-y-2">
-                        <div>
-                          <Checkbox id="success" name="success" aria-label="success" />
-                          <label
-                            for="success"
-                            class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                          >
-                            Success
-                          </label>
-                        </div>
-                        <div>
-                          <Checkbox id="failed" name="failed" aria-label="failed"/>
-                          <label
-                            for="failed"
-                            class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                          >
-                            Failed
-                          </label>
-                        </div>
-                      </div>
-                      <div class="flex flex-col space-y-2">
-                        <div>
-                          <Checkbox name="pending" id="pending" aria-label="pending"/>
-                          <label
-                            for="pending"
-                            class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                          >
-                            Pending
-                          </label>
-                        </div>
-                        <div>
-                          <Checkbox name="refunded" id="refunded" aria-label="refunded"/>
-                          <label
-                            for="refunded"
-                            class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                          >
-                            Refunded
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              <Search/>
+              <Filter/>
             </div>
           </div>
         </div>
-      </>
+      </div>
     </Dashboard>
   </body>
 </html>
