@@ -33,7 +33,7 @@ const value = ref({
 </script>
 
 <template>
-  <div>
+  <div class="w-full">
     <Popover>
       <PopoverTrigger as-child>
         <Button
