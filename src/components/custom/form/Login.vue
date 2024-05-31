@@ -2,6 +2,12 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useLoginStore } from "@/stores/login";
+import { onMounted } from "vue";
+const loginStore = useLoginStore();
+onMounted(() => {
+  loginStore.$reset();
+});
 </script>
 
 <template>
@@ -16,7 +22,13 @@ import { Label } from "@/components/ui/label";
       <div class="grid gap-4">
         <div class="grid gap-2">
           <Label for="email">Email</Label>
-          <Input id="email" type="email" placeholder="m@example.com" required />
+          <Input
+            id="email"
+            type="email"
+            placeholder="m@example.com"
+            required
+            v-model="loginStore.email"
+          />
         </div>
         <div class="grid gap-2">
           <div class="flex items-center">
@@ -28,9 +40,20 @@ import { Label } from "@/components/ui/label";
               Forgot your password?
             </a>
           </div>
-          <Input id="password" type="password" required />
+          <Input
+            id="password"
+            type="password"
+            required
+            v-model="loginStore.password"
+          />
         </div>
-        <Button type="submit" class="w-full"> Login </Button>
+        <Button
+          type="submit"
+          class="w-full"
+          @click.prevent="loginStore.userLogin()"
+        >
+          Login
+        </Button>
       </div>
       <div class="mt-4 text-center text-sm">
         Don't have an account?

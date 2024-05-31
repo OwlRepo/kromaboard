@@ -9,6 +9,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useSignUpStore } from "@/stores/signup";
+import { onMounted } from "vue";
+
+const signUpStore = useSignUpStore();
+
+onMounted(() => {
+  signUpStore.$reset();
+});
 </script>
 
 <template>
@@ -25,11 +33,21 @@ import {
           <div class="grid grid-cols-2 gap-4">
             <div class="grid gap-2">
               <Label for="first-name">First name</Label>
-              <Input id="first-name" placeholder="Max" required />
+              <Input
+                id="first-name"
+                placeholder="Max"
+                required
+                v-model="signUpStore.firstName"
+              />
             </div>
             <div class="grid gap-2">
               <Label for="last-name">Last name</Label>
-              <Input id="last-name" placeholder="Robinson" required />
+              <Input
+                id="last-name"
+                placeholder="Robinson"
+                required
+                v-model="signUpStore.lastName"
+              />
             </div>
           </div>
           <div class="grid gap-2">
@@ -39,13 +57,34 @@ import {
               type="email"
               placeholder="m@example.com"
               required
+              v-model="signUpStore.email"
             />
           </div>
           <div class="grid gap-2">
             <Label for="password">Password</Label>
-            <Input id="password" type="password" />
+            <Input
+              id="password"
+              type="text"
+              required
+              v-model="signUpStore.password"
+            />
           </div>
-          <Button type="submit" class="w-full"> Create Account </Button>
+          <div class="grid gap-2">
+            <Label for="confirm-password">Confirm Password</Label>
+            <Input
+              id="confirm-password"
+              type="text"
+              required
+              v-model="signUpStore.confirmPassword"
+            />
+          </div>
+          <Button
+            type="submit"
+            class="w-full"
+            @click.prevent="signUpStore.userSignUp()"
+          >
+            Create Account
+          </Button>
         </div>
         <div class="mt-4 text-center text-sm">
           Already have an account?
