@@ -3,8 +3,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useLoginStore } from "@/stores/login";
+import { useSignUpStore } from "@/stores/signup";
 import { onMounted } from "vue";
+import { AlertCircle } from "lucide-vue-next";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 const loginStore = useLoginStore();
+const signUpStore = useSignUpStore();
 onMounted(() => {
   loginStore.$reset();
 });
@@ -13,7 +17,14 @@ onMounted(() => {
 <template>
   <div class="flex items-center justify-center py-12">
     <div class="mx-auto grid w-[350px] gap-6">
-      <div class="grid gap-2 text-center">
+      <Alert v-if="signUpStore.successSignUp" variant="default">
+        <AlertCircle class="w-4 h-4" />
+        <AlertTitle>Verify your email</AlertTitle>
+        <AlertDescription>
+          An email has been sent to <strong>{{ signUpStore.email }}</strong>
+        </AlertDescription>
+      </Alert>
+      <div class="grid gap-2">
         <h1 class="text-3xl font-bold">Login</h1>
         <p class="text-balance text-muted-foreground">
           Enter your email below to login to your account

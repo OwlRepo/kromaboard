@@ -64,7 +64,7 @@ onMounted(() => {
             <Label for="password">Password</Label>
             <Input
               id="password"
-              type="text"
+              type="password"
               required
               v-model="signUpStore.password"
             />
@@ -73,18 +73,20 @@ onMounted(() => {
             <Label for="confirm-password">Confirm Password</Label>
             <Input
               id="confirm-password"
-              type="text"
+              type="password"
               required
               v-model="signUpStore.confirmPassword"
             />
           </div>
-          <Button
-            type="submit"
-            class="w-full"
-            @click.prevent="signUpStore.userSignUp()"
-          >
-            Create Account
-          </Button>
+          <a href="/">
+            <Button
+              type="submit"
+              class="w-full"
+              @click="signUpStore.userSignUp"
+            >
+              Create Account
+            </Button>
+          </a>
         </div>
         <div class="mt-4 text-center text-sm">
           Already have an account?
