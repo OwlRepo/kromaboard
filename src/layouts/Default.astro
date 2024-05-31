@@ -1,0 +1,22 @@
+---
+const currentRoute = Astro.url.pathname;
+---
+<html>
+    <head>
+        <title>imboard</title>
+    </head>
+    <body>
+        <div class="w-full lg:grid min-h-[100vh] lg:grid-cols-2">
+            <slot/>
+            <div class="hidden bg-muted lg:block">
+              <img
+                src={currentRoute.includes('/sign-up') ? "/assets/img/sign_up_banner.webp" : "/assets/img/login_banner.webp"}
+                alt="Image"
+                width="1920"
+                height="1080"
+                class="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+              />
+            </div>
+          </div>
+    </body>
+</html>

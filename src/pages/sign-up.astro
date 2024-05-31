@@ -1,5 +1,5 @@
 ---
-import Login from "@/components/custom/form/Login.vue"
+import SignUpForm from "@/components/custom/form/SignUp.vue"
 import '@/styles/globals.css'
 import { ViewTransitions } from "astro:transitions"
 import Default from '@/layouts/Default.astro'
@@ -11,7 +11,7 @@ import Default from '@/layouts/Default.astro'
   <ViewTransitions />
  </head>
     <Default>
-	    <Login client:visible//>
+	    <SignUpForm client:visible/>
     </Default>
  </body>
 </html>
