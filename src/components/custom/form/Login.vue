@@ -24,6 +24,13 @@ onMounted(() => {
           An email has been sent to <strong>{{ signUpStore.email }}</strong>
         </AlertDescription>
       </Alert>
+      <Alert v-if="loginStore.errorMessage" variant="destructive">
+        <AlertCircle class="w-4 h-4" />
+        <AlertTitle>Login failed</AlertTitle>
+        <AlertDescription>
+          {{ loginStore.errorMessage }}
+        </AlertDescription>
+      </Alert>
       <div class="grid gap-2">
         <h1 class="text-3xl font-bold">Login</h1>
         <p class="text-balance text-muted-foreground">
@@ -69,10 +76,6 @@ onMounted(() => {
       <div class="mt-4 text-center text-sm">
         Don't have an account?
         <a href="/sign-up" class="underline"> Sign up </a>
-      </div>
-      <div class="text-center text-sm">
-        Want to see how it works?
-        <a href="/dashboard" class="underline"> See preview </a>
       </div>
     </div>
   </div>

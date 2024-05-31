@@ -19,3 +19,9 @@ const currentRoute = Astro.url.pathname;
      </NavBar>
   </body>
 </html>
+
+<script>
+  if(!window.localStorage.getItem('hasSession')) {
+    window.location.href = '/'
+  }
+</script>

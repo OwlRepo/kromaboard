@@ -10,6 +10,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { supabase } from "@/lib/supabase";
+async function logout() {
+  let { error } = await supabase.auth.signOut();
+  if (!error) {
+    window.localStorage.clear();
+    window.location.href = "/";
+  }
+}
 </script>
 
 <template>
@@ -27,7 +35,7 @@ import {
         <DropdownMenuItem>Settings</DropdownMenuItem>
         <DropdownMenuItem>Support</DropdownMenuItem>
         <DropdownMenuSeparator />
-        <a href="/"><DropdownMenuItem>Logout</DropdownMenuItem></a>
+        <DropdownMenuItem @click.prevent="logout()">Logout</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   </div>

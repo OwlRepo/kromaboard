@@ -20,3 +20,9 @@ const currentRoute = Astro.url.pathname;
           </div>
     </body>
 </html>
+
+<script>
+  if(window.localStorage.getItem('hasSession')) {
+    window.location.href = '/dashboard'
+  }
+</script>

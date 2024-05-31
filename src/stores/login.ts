@@ -5,6 +5,7 @@ export const useLoginStore = defineStore("login", {
   state: () => ({
     email: "",
     password: "",
+    errorMessage: "",
   }),
   getters: {},
   actions: {
@@ -13,9 +14,12 @@ export const useLoginStore = defineStore("login", {
         email: this.email,
         password: this.password,
       });
-
-      console.log("data", data);
-      console.log("error", error);
+      if (data?.session?.access_token) {
+        window.localStorage.setItem("hasSession", "true");
+        window.location.href = "/dashboard";
+      } else {
+        this.errorMessage = error.message;
+      }
     },
   },
 });
