@@ -79,6 +79,32 @@ import DialogClose from "@/components/ui/dialog/DialogClose.vue";
         </div>
         <div class="grid gap-2">
           <Label for="item-count"
+            >Transaction Amount
+            <span class="text-red-400">*</span>
+          </Label>
+          <Input
+            id="item-count"
+            type="number"
+            min="1"
+            placeholder="m@example.com"
+            required
+          />
+        </div>
+        <div class="grid gap-2">
+          <Label for="item-count"
+            >Business Profit
+            <span class="text-red-400">*</span>
+          </Label>
+          <Input
+            id="item-count"
+            type="number"
+            min="1"
+            placeholder="m@example.com"
+            required
+          />
+        </div>
+        <div class="grid gap-2">
+          <Label for="item-count"
             >How many items?
             <span class="text-red-400">*</span>
           </Label>
@@ -89,6 +115,25 @@ import DialogClose from "@/components/ui/dialog/DialogClose.vue";
             placeholder="m@example.com"
             required
           />
+        </div>
+
+        <div class="grid gap-2">
+          <Label
+            >Transaction Status
+            <span class="text-red-400">*</span>
+          </Label>
+          <Select>
+            <SelectTrigger class="w-full">
+              <SelectValue placeholder="Status..." />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="success"> Success </SelectItem>
+                <SelectItem value="pending"> Pending </SelectItem>
+                <SelectItem value="refunded"> Refunded </SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
         <div class="grid gap-2">
           <Label for="remarks">Remarks (optional)</Label>
