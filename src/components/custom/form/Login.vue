@@ -88,11 +88,12 @@ watch(
           />
         </div>
         <Button
+          :disabled="loginStore.loading"
           type="submit"
           class="w-full"
-          @click.prevent="loginStore.userLogin()"
+          @click="loginStore.userLogin"
         >
-          Login
+          {{ loginStore.loading ? "Logging In..." : "Login" }}
         </Button>
       </div>
       <div class="mt-4 text-center text-sm">
