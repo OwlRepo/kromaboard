@@ -1,5 +1,5 @@
 <template>
-  <Card class="xl:col-span-3">
+  <Card class="xl:col-span-3 h-fit">
     <CardHeader class="flex flex-row items-center justify-between">
       <div class="grid gap-2">
         <CardTitle>Transactions</CardTitle>

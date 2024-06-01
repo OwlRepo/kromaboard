@@ -21,7 +21,7 @@ import { Activity, CreditCard, DollarSign, Users } from "lucide-vue-next";
       <CardHeader
         class="flex flex-row items-center justify-between space-y-0 pb-2"
       >
-        <CardTitle class="text-sm font-medium"> Subscriptions </CardTitle>
+        <CardTitle class="text-sm font-medium"> Current Balance </CardTitle>
         <Users class="h-4 w-4 text-muted-foreground" />
       </CardHeader>
       <CardContent>
