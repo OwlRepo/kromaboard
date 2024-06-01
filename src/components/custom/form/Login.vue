@@ -4,24 +4,46 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useLoginStore } from "@/stores/login";
 import { useSignUpStore } from "@/stores/signup";
-import { onMounted } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { AlertCircle } from "lucide-vue-next";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { useForgotPassword } from "@/stores/forgotpassword";
 const loginStore = useLoginStore();
 const signUpStore = useSignUpStore();
+const forgotPasswordStore = useForgotPassword();
+const showVerifyEmailAlert = ref(false);
+
 onMounted(() => {
   loginStore.$reset();
 });
+
+watch(
+  () => [
+    signUpStore.successSignUp,
+    forgotPasswordStore.successResetPasswordRequest,
+  ],
+  () => {
+    if (
+      signUpStore.successSignUp ||
+      forgotPasswordStore.successResetPasswordRequest
+    ) {
+      showVerifyEmailAlert.value = true;
+    }
+  }
+);
 </script>
 
 <template>
   <div class="flex items-center justify-center py-12">
     <div class="mx-auto grid w-[350px] gap-6">
-      <Alert v-if="signUpStore.successSignUp" variant="default">
+      <Alert v-if="showVerifyEmailAlert" variant="default">
         <AlertCircle class="w-4 h-4" />
         <AlertTitle>Verify your email</AlertTitle>
         <AlertDescription>
-          An email has been sent to <strong>{{ signUpStore.email }}</strong>
+          An email has been sent to
+          <strong>{{
+            signUpStore.email ? signUpStore.email : forgotPasswordStore.email
+          }}</strong>
         </AlertDescription>
       </Alert>
       <Alert v-if="loginStore.errorMessage" variant="destructive">
