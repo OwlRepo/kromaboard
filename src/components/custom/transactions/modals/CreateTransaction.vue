@@ -91,9 +91,9 @@ import DialogClose from "@/components/ui/dialog/DialogClose.vue";
           />
         </div>
         <div class="grid gap-2">
-          <Label for="item-count">Description (optional)</Label>
+          <Label for="remarks">Remarks (optional)</Label>
           <Input
-            id="item-count"
+            id="remarks"
             type="text"
             min="1"
             placeholder="m@example.com"
