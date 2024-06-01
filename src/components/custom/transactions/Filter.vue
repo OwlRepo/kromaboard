@@ -3,10 +3,28 @@
     <CardHeader class="flex flex-row items-center justify-between">
       <div class="grid gap-2">
         <CardTitle>Filter</CardTitle>
-        <CardDescription> Filter by date, status or product. </CardDescription>
+        <CardDescription> Filter by product, date and status. </CardDescription>
       </div>
     </CardHeader>
     <CardContent class="flex flex-col space-y-6 items-stretch">
+      <div class="flex flex-col space-y-2">
+        <b>Product</b>
+        <Select>
+          <SelectTrigger class="w-full">
+            <SelectValue placeholder="Select a product" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <!-- <SelectLabel>Products</SelectLabel> -->
+              <SelectItem value="apple"> Apple </SelectItem>
+              <SelectItem value="banana"> Banana </SelectItem>
+              <SelectItem value="blueberry"> Blueberry </SelectItem>
+              <SelectItem value="grapes"> Grapes </SelectItem>
+              <SelectItem value="pineapple"> Pineapple </SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </div>
       <div class="flex flex-col space-y-2">
         <b>Transaction Date</b>
         <div class="flex flex-row items-center">
@@ -28,17 +46,6 @@
                 Success
               </label>
             </div>
-            <div>
-              <Checkbox id="failed" name="failed" aria-label="failed" />
-              <label
-                for="failed"
-                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                Failed
-              </label>
-            </div>
-          </div>
-          <div class="flex flex-col space-y-2">
             <div>
               <Checkbox name="pending" id="pending" aria-label="pending" />
               <label
@@ -72,6 +79,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import DateRangePicker from "@/components/custom/form/DateRangePicker.vue";
 </script>

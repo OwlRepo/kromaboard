@@ -1,5 +1,5 @@
 <template>
-  <Card class="xl:col-span-3 h-fit">
+  <Card>
     <CardHeader class="flex flex-row items-center justify-between">
       <div class="grid gap-2">
         <CardTitle>Transactions</CardTitle>
@@ -7,10 +7,7 @@
           Recent transactions from your store.
         </CardDescription>
       </div>
-      <Button size="sm" class="w-fit space-x-2">
-        <span>New Transaction</span>
-        <Plus class="h-4 w-4" />
-      </Button>
+      <CreateTransaction />
     </CardHeader>
     <CardContent />
   </Card>
@@ -24,6 +21,5 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-vue-next";
+import CreateTransaction from "@/components/custom/transactions/modals/CreateTransaction.vue";
 </script>
