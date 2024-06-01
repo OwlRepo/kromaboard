@@ -72,7 +72,10 @@ onMounted(() => {
                 required
                 v-model="signUpStore.password"
               />
-              <Button @click="showPassword = !showPassword">
+              <Button
+                aria-label="show-hide-new-password-toggle"
+                @click="showPassword = !showPassword"
+              >
                 <Eye v-if="showPassword" class="w-4 h-4" />
                 <EyeOff v-else class="w-4 h-4" />
               </Button>
@@ -87,7 +90,10 @@ onMounted(() => {
                 required
                 v-model="signUpStore.confirmPassword"
               />
-              <Button @click="showConfirmPassword = !showConfirmPassword">
+              <Button
+                name="show-hide-confirm-password-toggle"
+                @click="showConfirmPassword = !showConfirmPassword"
+              >
                 <Eye v-if="showConfirmPassword" class="w-4 h-4" />
                 <EyeOff v-else class="w-4 h-4" />
               </Button>

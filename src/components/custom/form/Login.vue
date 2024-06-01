@@ -88,7 +88,10 @@ watch(
               required
               v-model="loginStore.password"
             />
-            <Button @click="showPassword = !showPassword">
+            <Button
+              aria-label="show-hide-password-toggle"
+              @click="showPassword = !showPassword"
+            >
               <Eye v-if="showPassword" class="w-4 h-4" />
               <EyeOff v-else class="w-4 h-4" />
             </Button>

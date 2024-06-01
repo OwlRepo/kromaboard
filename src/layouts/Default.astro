@@ -1,10 +1,10 @@
 ---
-const currentRoute = Astro.url.pathname;
-const banners = {
-  '/sign-up': '/assets/img/sign_up_banner.webp',
-  '/': '/assets/img/login_banner.webp',
-  '/forgot-password': '/assets/img/forgot_password_banner.webp'
-}
+// const currentRoute = Astro.url.pathname;
+// const banners = {
+//   '/sign-up': '/assets/img/sign_up_banner.webp',
+//   '/': '/assets/img/login_banner.webp',
+//   '/forgot-password': '/assets/img/forgot_password_banner.webp'
+// }
 ---
 <html>
     <head>
@@ -16,9 +16,9 @@ const banners = {
             <div class="hidden bg-muted lg:block">
               <img
                 src='/assets/img/login_banner.webp'
-                alt="Image"
-                width="1920"
-                height="1080"
+                decoding="async"
+                loading="lazy"
+                alt="A description of my image."
                 class="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
               />
             </div>
