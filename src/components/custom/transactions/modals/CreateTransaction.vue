@@ -31,7 +31,7 @@ import DialogClose from "@/components/ui/dialog/DialogClose.vue";
         <Plus class="h-4 w-4" />
       </Button>
     </DialogTrigger>
-    <DialogContent class="sm:max-w-[425px]">
+    <DialogContent class="max-w-[90vw] lg:max-w-[50vw] rounded-lg">
       <DialogHeader>
         <DialogTitle>New Transaction</DialogTitle>
         <DialogDescription> Create a new transaction. </DialogDescription>
