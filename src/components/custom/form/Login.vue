@@ -35,7 +35,7 @@ watch(
 </script>
 
 <template>
-  <div class="flex items-center justify-center py-12">
+  <div class="flex items-center justify-center py-12 min-h-[100vh]">
     <div class="mx-auto grid w-[350px] gap-6">
       <Alert v-if="showVerifyEmailAlert" variant="default">
         <AlertCircle class="w-4 h-4" />

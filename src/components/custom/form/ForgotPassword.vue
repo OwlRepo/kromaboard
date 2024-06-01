@@ -20,7 +20,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex items-center justify-center py-12">
+  <div class="flex items-center justify-center py-12 min-h-[100vh]">
     <Card class="mx-auto max-w-sm">
       <CardHeader>
         <CardTitle class="text-xl"> Forgot Password </CardTitle>
