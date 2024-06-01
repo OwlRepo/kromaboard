@@ -8,6 +8,24 @@
     </CardHeader>
     <CardContent class="flex flex-col space-y-6 items-stretch">
       <div class="flex flex-col space-y-2">
+        <b>Category</b>
+        <Select>
+          <SelectTrigger class="w-full">
+            <SelectValue placeholder="Select a category" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <!-- <SelectLabel>Products</SelectLabel> -->
+              <SelectItem value="apple"> Apple </SelectItem>
+              <SelectItem value="banana"> Banana </SelectItem>
+              <SelectItem value="blueberry"> Blueberry </SelectItem>
+              <SelectItem value="grapes"> Grapes </SelectItem>
+              <SelectItem value="pineapple"> Pineapple </SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </div>
+      <div class="flex flex-col space-y-2">
         <b>Product</b>
         <Select>
           <SelectTrigger class="w-full">
