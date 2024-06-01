@@ -11,7 +11,12 @@ export const useForgotPassword = defineStore("forgot-password", {
   actions: {
     async userForgotPassword() {
       let { data, error } = await supabase.auth.resetPasswordForEmail(
-        this.email
+        this.email,
+        {
+          redirectTo: `http://${
+            import.meta.env.PUBLIC_BASE_URL
+          }/reset-password`,
+        }
       );
 
       if (!error) {

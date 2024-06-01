@@ -23,7 +23,7 @@ onMounted(() => {
   <div class="flex items-center justify-center py-12">
     <Card class="mx-auto max-w-sm">
       <CardHeader>
-        <CardTitle class="text-xl"> Reset Password </CardTitle>
+        <CardTitle class="text-xl"> Forgot Password </CardTitle>
         <CardDescription>
           Enter your email to reeset your password
         </CardDescription>
