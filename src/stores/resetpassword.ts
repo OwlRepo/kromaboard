@@ -1,23 +1,23 @@
 import { supabase } from "@/lib/supabase";
 import { defineStore } from "pinia";
 
-export const useForgotPassword = defineStore("forgot-password", {
+export const useResetPassword = defineStore("reset-password", {
   state: () => ({
-    email: "",
-    successResetPasswordRequest: false,
-    requestToken: "",
+    password: "",
+    successResetPassword: false,
     errorMessage: null,
   }),
   getters: {},
   actions: {
-    async userForgotPassword() {
-      let { data, error } = await supabase.auth.resetPasswordForEmail(
-        this.email
-      );
+    async userResetPassword() {
+      let { data, error } = await supabase.auth.updateUser({
+        password: this.password,
+      });
 
       if (!error) {
-        this.successResetPasswordRequest = true;
+        this.successResetPassword = true;
         console.log("success_data", JSON.stringify(data, null, 4));
+        window.location.href = "/";
       } else {
         this.errorMessage = error.message;
         console.log("error_data", error);

@@ -9,23 +9,41 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useSignUpStore } from "@/stores/signup";
 import { onMounted, ref } from "vue";
-import { Eye, EyeOff } from "lucide-vue-next";
+import { AlertCircle, Eye, EyeOff } from "lucide-vue-next";
+import { useResetPassword } from "@/stores/resetpassword";
+import Alert from "@/components/ui/alert/Alert.vue";
+import AlertTitle from "@/components/ui/alert/AlertTitle.vue";
+import AlertDescription from "@/components/ui/alert/AlertDescription.vue";
 
-const signUpStore = useSignUpStore();
+const resetPassword = useResetPassword();
 const showPassword = ref(false);
-const showConfirmPassword = ref(false);
 
 onMounted(() => {
-  signUpStore.$reset();
+  resetPassword.$reset();
 });
 </script>
 
 <template>
-  <div class="flex items-center justify-center py-12 min-h-[100vh]">
+  <div class="flex flex-col items-center justify-center py-12 min-h-[100vh]">
     <Card class="mx-auto max-w-sm">
       <CardHeader>
+        <Alert v-if="resetPassword.errorMessage" variant="destructive">
+          <AlertCircle class="w-4 h-4" />
+          <AlertTitle>Reset password failed</AlertTitle>
+          <AlertDescription>
+            {{ resetPassword.errorMessage }}
+          </AlertDescription>
+        </Alert>
+        <Alert v-if="resetPassword.successResetPassword">
+          <AlertCircle class="w-4 h-4" />
+          <AlertTitle>Sucessful reset</AlertTitle>
+          <AlertDescription>
+            Account password has been reset.
+            <br />
+            <a href="/" class="underline text-primary">Click</a> here to login.
+          </AlertDescription>
+        </Alert>
         <CardTitle class="text-xl"> Set new password </CardTitle>
         <CardDescription>
           Enter your new password to access your account
@@ -38,9 +56,10 @@ onMounted(() => {
             <div class="flex items-stretch space-x-2">
               <Input
                 id="password"
+                :disabled="resetPassword.successResetPassword"
                 :type="showPassword ? 'text' : 'password'"
                 required
-                v-model="signUpStore.password"
+                v-model="resetPassword.password"
               />
               <Button @click="showPassword = !showPassword">
                 <Eye v-if="showPassword" class="w-4 h-4" />
@@ -48,15 +67,14 @@ onMounted(() => {
               </Button>
             </div>
           </div>
-          <a href="/">
-            <Button
-              type="submit"
-              class="w-full"
-              @click="signUpStore.userSignUp"
-            >
-              Submit
-            </Button>
-          </a>
+          <Button
+            type="submit"
+            class="w-full"
+            :disabled="resetPassword.successResetPassword"
+            @click="resetPassword.userResetPassword"
+          >
+            Submit
+          </Button>
         </div>
       </CardContent>
     </Card>
