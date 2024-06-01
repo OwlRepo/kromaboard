@@ -85,6 +85,10 @@
           </div>
         </div>
       </div>
+      <div class="flex flex-row justify-between space-x-2">
+        <Button class="w-full" variant="outline">Reset</Button>
+        <Button class="w-full">Filter</Button>
+      </div>
     </CardContent>
   </Card>
 </template>
@@ -108,4 +112,5 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import DateRangePicker from "@/components/custom/form/DateRangePicker.vue";
+import Button from "@/components/ui/button/Button.vue";
 </script>
