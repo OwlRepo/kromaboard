@@ -10,9 +10,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useSignUpStore } from "@/stores/signup";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
+import { Eye, EyeOff } from "lucide-vue-next";
 
 const signUpStore = useSignUpStore();
+const showPassword = ref(false);
+const showConfirmPassword = ref(false);
 
 onMounted(() => {
   signUpStore.$reset();
@@ -62,21 +65,33 @@ onMounted(() => {
           </div>
           <div class="grid gap-2">
             <Label for="password">Password</Label>
-            <Input
-              id="password"
-              type="password"
-              required
-              v-model="signUpStore.password"
-            />
+            <div class="flex items-stretch space-x-2">
+              <Input
+                id="password"
+                :type="showPassword ? 'text' : 'password'"
+                required
+                v-model="signUpStore.password"
+              />
+              <Button @click="showPassword = !showPassword">
+                <Eye v-if="showPassword" class="w-4 h-4" />
+                <EyeOff v-else class="w-4 h-4" />
+              </Button>
+            </div>
           </div>
           <div class="grid gap-2">
             <Label for="confirm-password">Confirm Password</Label>
-            <Input
-              id="confirm-password"
-              type="password"
-              required
-              v-model="signUpStore.confirmPassword"
-            />
+            <div class="flex items-stretch space-x-2">
+              <Input
+                id="password"
+                :type="showConfirmPassword ? 'text' : 'password'"
+                required
+                v-model="signUpStore.confirmPassword"
+              />
+              <Button @click="showConfirmPassword = !showConfirmPassword">
+                <Eye v-if="showConfirmPassword" class="w-4 h-4" />
+                <EyeOff v-else class="w-4 h-4" />
+              </Button>
+            </div>
           </div>
           <a href="/">
             <Button

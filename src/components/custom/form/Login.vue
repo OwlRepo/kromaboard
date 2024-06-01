@@ -5,13 +5,14 @@ import { Label } from "@/components/ui/label";
 import { useLoginStore } from "@/stores/login";
 import { useSignUpStore } from "@/stores/signup";
 import { onMounted, ref, watch } from "vue";
-import { AlertCircle } from "lucide-vue-next";
+import { AlertCircle, Eye, EyeOff } from "lucide-vue-next";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useForgotPassword } from "@/stores/forgotpassword";
 const loginStore = useLoginStore();
 const signUpStore = useSignUpStore();
 const forgotPasswordStore = useForgotPassword();
 const showVerifyEmailAlert = ref(false);
+const showPassword = ref(false);
 
 onMounted(() => {
   loginStore.$reset();
@@ -80,12 +81,18 @@ watch(
               Forgot your password?
             </a>
           </div>
-          <Input
-            id="password"
-            type="password"
-            required
-            v-model="loginStore.password"
-          />
+          <div class="flex items-stretch space-x-2">
+            <Input
+              id="password"
+              :type="showPassword ? 'text' : 'password'"
+              required
+              v-model="loginStore.password"
+            />
+            <Button @click="showPassword = !showPassword">
+              <Eye v-if="showPassword" class="w-4 h-4" />
+              <EyeOff v-else class="w-4 h-4" />
+            </Button>
+          </div>
         </div>
         <Button
           :disabled="loginStore.loading"
