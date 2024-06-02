@@ -11,7 +11,7 @@ const currentRoute = Astro.url.pathname;
     <ViewTransitions />
   </head>
   <body>
-     <NavBar>
+     <NavBar client:visible>
         <Sidebar slot="side-bar" currentRoute={currentRoute}/>
         <UserDropdownMenu slot="user-dropdown-menu" client:visible />
         <MobileNavSheet slot="mobile-nav-sheet"  currentRoute={currentRoute} client:visible />

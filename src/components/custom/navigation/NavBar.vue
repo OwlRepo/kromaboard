@@ -10,9 +10,23 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { computed } from "vue";
+import { supabase } from "@/lib/supabase";
+import { onMounted } from "vue";
+const { data } = await supabase.auth.getSession();
 
-const currentRoute = computed(() => window.location.pathname);
+async function logout() {
+  let { error } = await supabase.auth.signOut();
+  if (!error) {
+    window.localStorage.clear();
+    window.location.href = "/";
+  }
+}
+
+onMounted(() => {
+  if (!data.session) {
+    logout();
+  }
+});
 </script>
 
 <template>
