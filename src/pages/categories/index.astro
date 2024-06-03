@@ -1,15 +1,27 @@
 ---
-import '@/styles/globals.css'
-import Dashboard from '@/layouts/Dashboard.astro'
+import "@/styles/globals.css";
+import Dashboard from "@/layouts/Dashboard.astro";
+import {Filter,Table} from "@/components/custom/categories";
 ---
 
 <html lang="en">
- <head>
-  <title>Categories | KromaBoard</title>
- </head>
- <body>
+  <head>
+    <title>Category | KromaBoard</title>
+  </head>
+  <body>
     <Dashboard>
-        categories page
+      <div>
+        <div class="flex justify-end">
+          <div class="flex flex-col-reverse lg:flex-row w-full lg:space-x-5">
+            <div class="flex-[1] w-full">
+              <Table client:visible/>
+            </div>
+            <div class="mb-5 lg:mb-0">
+              <Filter client:visible/>
+            </div>
+          </div>
+        </div>
+      </div>
     </Dashboard>
- </body>
+  </body>
 </html>
