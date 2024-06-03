@@ -71,22 +71,22 @@ import DialogClose from "@/components/ui/dialog/DialogClose.vue";
 
         <div class="grid gap-2">
           <Label for="product_price" class="flex justify-between"
-            >Product Price
-            <span class="text-xs font-normal italic">
-              ( Leave blank if not applicable )</span
-            ></Label
+            >Product Price</Label
           >
-          <Input id="product_price" type="text" required />
+          <Input id="product_price" type="number" min="1" required />
+          <span class="text-xs font-normal italic ml-auto">
+            ( Leave blank if not applicable )
+          </span>
         </div>
 
         <div class="grid gap-2">
           <Label for="product_profit" class="flex justify-between"
-            >Profit per unit sold
-            <span class="text-xs font-normal italic">
-              ( Leave blank if not applicable )</span
-            ></Label
+            >Profit per unit sold</Label
           >
-          <Input id="product_profit" type="text" required />
+          <Input id="product_profit" type="number" min="1" required />
+          <span class="text-xs font-normal italic ml-auto">
+            ( Leave blank if not applicable )
+          </span>
         </div>
       </div>
       <DialogFooter>
