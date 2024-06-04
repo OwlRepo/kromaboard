@@ -26,13 +26,13 @@
         <AlertTitle>Operation in-progress</AlertTitle>
         <AlertDescription> Reloading categories... </AlertDescription>
       </Alert>
-      <Table v-if="categoriesStore.categories">
+      <Table v-if="categoriesStore?.categories?.length > 0">
         <TableHeader>
           <TableRow class="bg-muted">
-            <TableHead>Name</TableHead>
-            <TableHead class="w-[150px]"> Created at </TableHead>
-            <TableHead class="w-[150px]"> Is Active </TableHead>
-            <TableHead class="w-[150px]"> Actions </TableHead>
+            <TableHead class="min-w-[300px]">Name</TableHead>
+            <TableHead>Created At</TableHead>
+            <TableHead>Is Active</TableHead>
+            <TableHead>Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -40,11 +40,11 @@
             v-for="(category, index) in categoriesStore.categories"
             :key="category.id"
           >
-            <TableCell class="font-bold">
+            <TableCell class="font-bold overflow-auto max-w-[300px]">
               {{ category.name }}
             </TableCell>
             <TableCell>{{
-              dayjs(category.created_at).format("DD/MM/YYYY")
+              dayjs(category.created_at).format("MMMM DD, YYYY - HH:mm a")
             }}</TableCell>
             <TableCell class="text-center">
               <CheckCircle
@@ -55,7 +55,7 @@
             </TableCell>
             <TableCell>
               <div class="flex flex-row space-x-2">
-                <EditCategory :category="category" :index="index" />
+                <EditCategory :index="index" />
               </div>
             </TableCell>
           </TableRow>
@@ -88,7 +88,6 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-  TableCaption,
 } from "@/components/ui/table";
 import dayjs from "dayjs";
 import {

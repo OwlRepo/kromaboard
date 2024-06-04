@@ -68,10 +68,6 @@ import Switch from "@/components/ui/switch/Switch.vue";
 
 const categoriesStore = useCategoriesStore();
 defineProps({
-  category: {
-    type: Object as () => Category,
-    required: true,
-  },
   index: {
     type: Number,
     required: true,

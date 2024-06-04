@@ -22,7 +22,7 @@ export const useCategoriesStore = defineStore("categories", {
         .insert([
           {
             name: this.newCategoryName,
-            created_at: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+            created_at: dayjs().format(),
             created_by: user?.session?.user?.id,
           },
         ])
@@ -39,7 +39,8 @@ export const useCategoriesStore = defineStore("categories", {
       this.loading = true;
       const { data: categories, error } = await supabase
         .from("categories")
-        .select("*");
+        .select("*")
+        .order("created_at", { ascending: false });
 
       if (!error) {
         this.categories = categories;
