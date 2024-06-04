@@ -1,28 +1,3 @@
-<script setup lang="ts">
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Plus } from "lucide-vue-next";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import DialogClose from "@/components/ui/dialog/DialogClose.vue";
-</script>
-
 <template>
   <Dialog>
     <DialogTrigger as-child>
@@ -38,22 +13,45 @@ import DialogClose from "@/components/ui/dialog/DialogClose.vue";
       </DialogHeader>
       <div class="grid gap-4 py-4">
         <div class="grid gap-2">
-          <Label for="remarks"
+          <Label for="category_name"
             >Category Name <span class="text-red-400">*</span></Label
           >
           <Input
             id="category_name"
             type="text"
             placeholder="Category Name..."
+            v-model="categoriesStore.newCategoryName"
             required
           />
         </div>
       </div>
       <DialogFooter>
         <DialogClose as-child>
-          <Button type="submit"> Submit </Button>
+          <Button type="submit" @click="categoriesStore.createNewCategory">
+            Submit
+          </Button>
         </DialogClose>
       </DialogFooter>
     </DialogContent>
   </Dialog>
 </template>
+
+<script setup lang="ts">
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Plus } from "lucide-vue-next";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import DialogClose from "@/components/ui/dialog/DialogClose.vue";
+import { useCategoriesStore } from "@/stores/categories";
+
+const categoriesStore = useCategoriesStore();
+</script>
