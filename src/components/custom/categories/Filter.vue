@@ -1,5 +1,5 @@
 <template>
-  <Card>
+  <Card class="lg:sticky lg:top-10">
     <CardHeader class="flex flex-row items-center justify-between">
       <div class="grid gap-2">
         <CardTitle>Filter</CardTitle>
