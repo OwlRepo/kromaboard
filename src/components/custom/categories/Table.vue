@@ -39,7 +39,7 @@
               {{ category.name }}
             </TableCell>
             <TableCell>{{
-              dayjs(category.created_at).format("MMMM DD, YYYY - HH:mm a")
+              dayjs(category.created_at).format("MMMM DD, YYYY - hh:mm a")
             }}</TableCell>
             <TableCell class="text-center">
               <CheckCircle
