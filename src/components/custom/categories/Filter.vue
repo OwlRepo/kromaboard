@@ -8,14 +8,10 @@
     </CardHeader>
     <CardContent class="flex flex-col space-y-6 items-stretch">
       <div class="flex flex-col space-y-2">
-        <b>Creation Date</b>
+        <b>Created At</b>
         <div class="flex flex-row items-center">
-          <DateRangePicker client:visible />
+          <DateRangePicker @filterTable="filterByDate" />
         </div>
-      </div>
-      <div class="flex flex-row justify-between space-x-2">
-        <Button class="w-full" variant="outline">Reset</Button>
-        <Button class="w-full">Filter</Button>
       </div>
     </CardContent>
   </Card>
@@ -29,16 +25,27 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
 import DateRangePicker from "@/components/custom/form/DateRangePicker.vue";
-import Button from "@/components/ui/button/Button.vue";
+import { useCategoriesStore } from "@/stores/categories";
+import dayjs from "dayjs";
+
+const categoriesStore = useCategoriesStore();
+
+function filterByDate(data) {
+  const date = {
+    start: dayjs(`${data.start.year}-${data.start.month}-${data.start.day}`)
+      .startOf("day")
+      .format(),
+    end: dayjs(`${data.end.year}-${data.end.month}-${data.end.day}`)
+      .endOf("day")
+      .format(),
+  };
+
+  if (window.history.pushState) {
+    const newURL = new URL(window.location.href);
+    newURL.search = `&startDate=${date.start}&endDate=${date.end}`;
+    window.history.pushState({ path: newURL.href }, "", newURL.href);
+  }
+  categoriesStore.fetchCategories(1, date);
+}
 </script>

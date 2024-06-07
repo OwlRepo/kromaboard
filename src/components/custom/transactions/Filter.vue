@@ -46,7 +46,7 @@
       <div class="flex flex-col space-y-2">
         <b>Transaction Date</b>
         <div class="flex flex-row items-center">
-          <DateRangePicker client:visible />
+          <DateRangePicker />
         </div>
       </div>
       <div class="flex flex-col space-y-2">

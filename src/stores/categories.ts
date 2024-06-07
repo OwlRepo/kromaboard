@@ -41,19 +41,29 @@ export const useCategoriesStore = defineStore("categories", {
         this.errorMessage = error.message;
       }
     },
-    async fetchCategories(page = Number(getQueryVariable("page"))) {
+    async fetchCategories(
+      page = Number(getQueryVariable("page")),
+      date = {
+        start: getQueryVariable("startDate"),
+        end: getQueryVariable("endDate"),
+      }
+    ) {
       this.loading = true;
-      this.fetchCategoryCount();
+      this.fetchCategoryCount(date);
+
       if (window.history.pushState) {
         const newURL = new URL(window.location.href);
-        newURL.search = `?page=${page}`;
+        newURL.search = `?page=${page}&startDate=${date.start}&endDate=${date.end}`;
         window.history.pushState({ path: newURL.href }, "", newURL.href);
       }
+
       const { data: categories, error } = await supabase
         .from("categories")
         .select("*")
         .range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1)
-        .order("created_at", { ascending: false });
+        .gte("created_at", date.start)
+        .lte("created_at", date.end)
+        .order("created_at");
 
       if (!error) {
         this.categories = categories;
@@ -62,10 +72,12 @@ export const useCategoriesStore = defineStore("categories", {
         this.errorMessage = error.message;
       }
     },
-    async fetchCategoryCount() {
+    async fetchCategoryCount(date: any) {
       const { data: _, count: categoryCount } = await supabase
         .from("categories")
-        .select("*", { count: "exact", head: true });
+        .select("*", { count: "exact", head: true })
+        .gte("created_at", date.start)
+        .lte("created_at", date.end);
 
       if (!categoryCount) {
         this.pageCount = 0;

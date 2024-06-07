@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import {
   Home,
   LineChart,
@@ -25,7 +26,10 @@ const LOGGED_IN_ROUTES: Array<LoggedInRoute> = [
   },
   {
     name: "Categories",
-    path: "/categories?page=1",
+    path: `/categories?page=1&startDate=${dayjs()
+      .startOf("day")
+      .subtract(3, "days")
+      .format()}&endDate=${dayjs().endOf("day").format()}`,
     icon: Blocks,
   },
   {

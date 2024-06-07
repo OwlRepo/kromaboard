@@ -64,6 +64,7 @@
         <p>There are no categories yet</p>
       </div>
       <Pagination
+        v-if="categoriesStore?.categories?.length > 0"
         class="ml-auto w-fit mt-5"
         v-slot="{ page }"
         :total="categoriesStore.categoryCount"

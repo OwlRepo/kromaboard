@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { type Ref, ref } from "vue";
+import { watch } from "vue";
 import {
   CalendarDate,
   DateFormatter,
@@ -17,19 +18,35 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import dayjs from "dayjs";
+import getQueryVariable from "@/helpers/getQueryVariable";
 
 const df = new DateFormatter("en-US", {
-  dateStyle: "short",
+  dateStyle: "medium",
 });
 
 const value = ref({
-  start: new CalendarDate(dayjs().year(), dayjs().month() + 1, dayjs().date()),
+  start: new CalendarDate(
+    dayjs(getQueryVariable("startDate") as string).year(),
+    dayjs(getQueryVariable("startDate") as string).month() + 1,
+    dayjs(getQueryVariable("startDate") as string).date()
+  ),
   end: new CalendarDate(
-    dayjs().year(),
-    dayjs().month() + 1,
-    dayjs().date()
-  ).add({ days: 3 }),
+    dayjs(getQueryVariable("endDate") as string).year(),
+    dayjs(getQueryVariable("endDate") as string).month() + 1,
+    dayjs(getQueryVariable("endDate") as string).date()
+  ),
 }) as Ref<DateRange>;
+
+const emit = defineEmits(["filterTable"]);
+
+watch(
+  () => value.value.end,
+  (newValue) => {
+    if (newValue) {
+      emit("filterTable", value.value);
+    }
+  }
+);
 </script>
 
 <template>
@@ -65,6 +82,7 @@ const value = ref({
           initial-focus
           :number-of-months="2"
           @update:start-value="(startDate) => (value.start = startDate)"
+          @update:end-value="(endDate) => (value.end = endDate)"
         />
       </PopoverContent>
     </Popover>
