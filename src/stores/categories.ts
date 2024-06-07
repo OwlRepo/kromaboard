@@ -63,7 +63,7 @@ export const useCategoriesStore = defineStore("categories", {
         .range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1)
         .gte("created_at", date.start)
         .lte("created_at", date.end)
-        .order("created_at");
+        .order("created_at", { ascending: false });
 
       if (!error) {
         this.categories = categories;
