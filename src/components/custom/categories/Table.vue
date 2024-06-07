@@ -21,11 +21,6 @@
           {{ categoriesStore.errorMessage }}
         </AlertDescription>
       </Alert>
-      <Alert v-if="categoriesStore.loading" class="mb-5">
-        <AlertCircle class="w-4 h-4" />
-        <AlertTitle>Operation in-progress</AlertTitle>
-        <AlertDescription> Reloading categories... </AlertDescription>
-      </Alert>
       <Table v-if="categoriesStore?.categories?.length > 0">
         <TableHeader>
           <TableRow class="bg-muted">
@@ -68,6 +63,49 @@
         <PackageSearch class="h-12 w-12" />
         <p>There are no categories yet</p>
       </div>
+      <Pagination
+        class="ml-auto w-fit mt-5"
+        v-slot="{ page }"
+        :total="categoriesStore.categoryCount"
+        show-edges
+        :default-page="Number(getQueryVariable('page'))"
+      >
+        <PaginationList v-slot="{ items }" class="flex items-center gap-1">
+          <PaginationFirst
+            @click.prevent="categoriesStore.fetchCategories(1)"
+          />
+          <PaginationPrev
+            @click.prevent="categoriesStore.fetchCategories(page - 1)"
+          />
+
+          <template v-for="(item, index) in items">
+            <PaginationListItem
+              v-if="item.type === 'page'"
+              :key="index"
+              :value="item.value"
+              as-child
+            >
+              <Button
+                class="w-10 h-10 p-0"
+                :variant="item.value === page ? 'default' : 'outline'"
+                @click.prevent="categoriesStore.fetchCategories(item.value)"
+              >
+                {{ item.value }}
+              </Button>
+            </PaginationListItem>
+            <PaginationEllipsis v-else :key="item.type" :index="index" />
+          </template>
+
+          <PaginationNext
+            @click.prevent="categoriesStore.fetchCategories(page + 1)"
+          />
+          <PaginationLast
+            @click.prevent="
+              categoriesStore.fetchCategories(categoriesStore.pageCount)
+            "
+          />
+        </PaginationList>
+      </Pagination>
     </CardContent>
   </Card>
 </template>
@@ -102,6 +140,19 @@ import { onMounted } from "vue";
 import Alert from "@/components/ui/alert/Alert.vue";
 import AlertTitle from "@/components/ui/alert/AlertTitle.vue";
 import AlertDescription from "@/components/ui/alert/AlertDescription.vue";
+import {
+  Pagination,
+  PaginationEllipsis,
+  PaginationFirst,
+  PaginationLast,
+  PaginationList,
+  PaginationListItem,
+  PaginationNext,
+  PaginationPrev,
+} from "@/components/ui/pagination";
+
+import { Button } from "@/components/ui/button";
+import getQueryVariable from "@/helpers/getQueryVariable";
 
 const categoriesStore = useCategoriesStore();
 

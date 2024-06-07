@@ -25,7 +25,7 @@ const LOGGED_IN_ROUTES: Array<LoggedInRoute> = [
   },
   {
     name: "Categories",
-    path: "/categories",
+    path: "/categories?page=1",
     icon: Blocks,
   },
   {

@@ -1,12 +1,18 @@
 import type { Category } from "@/constants/types/category.type";
+import getQueryVariable from "@/helpers/getQueryVariable";
 import { supabase } from "@/lib/supabase";
 import dayjs from "dayjs";
 import { defineStore } from "pinia";
+
+const PAGE_SIZE = 10;
 
 export const useCategoriesStore = defineStore("categories", {
   state: () => ({
     newCategoryName: "",
     categories: null,
+    pageCount: null,
+    categoryCount: 0,
+    defaultPage: Number(getQueryVariable("page")) || 1,
     loading: false,
     reloading: false,
     errorMessage: "",
@@ -35,11 +41,18 @@ export const useCategoriesStore = defineStore("categories", {
         this.errorMessage = error.message;
       }
     },
-    async fetchCategories() {
+    async fetchCategories(page = Number(getQueryVariable("page"))) {
       this.loading = true;
+      this.fetchCategoryCount();
+      if (window.history.pushState) {
+        const newURL = new URL(window.location.href);
+        newURL.search = `?page=${page}`;
+        window.history.pushState({ path: newURL.href }, "", newURL.href);
+      }
       const { data: categories, error } = await supabase
         .from("categories")
         .select("*")
+        .range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1)
         .order("created_at", { ascending: false });
 
       if (!error) {
@@ -47,6 +60,18 @@ export const useCategoriesStore = defineStore("categories", {
         this.loading = false;
       } else {
         this.errorMessage = error.message;
+      }
+    },
+    async fetchCategoryCount() {
+      const { data: _, count: categoryCount } = await supabase
+        .from("categories")
+        .select("*", { count: "exact", head: true });
+
+      if (!categoryCount) {
+        this.pageCount = 0;
+      } else {
+        this.categoryCount = categoryCount;
+        this.pageCount = Math.ceil(categoryCount / PAGE_SIZE);
       }
     },
     async updateCategory(category: Category) {
