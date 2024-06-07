@@ -1,8 +1,18 @@
 <template>
   <Dialog>
     <DialogTrigger as-child>
-      <Button size="sm" variant="outline">
-        <Edit class="h-4 w-4" />
+      <Button size="sm" variant="outline" @click="isDraft = true">
+        <Edit v-if="!isDraft" class="h-4 w-4" />
+        <TooltipProvider v-else>
+          <Tooltip>
+            <TooltipTrigger as-child>
+              <CircleAlert class="h-4 w-4 text-red-400" />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Changes are not saved</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </Button>
     </DialogTrigger>
     <DialogContent class="max-w-[90vw] lg:max-w-[50vw] rounded-lg">
@@ -35,11 +45,16 @@
         <DialogClose as-child>
           <Button
             type="submit"
-            @click="
-              categoriesStore.updateCategory(categoriesStore.categories[index])
+            @click.prevent="
+              () => {
+                isDraft = false;
+                categoriesStore.updateCategory(
+                  categoriesStore.categories[index]
+                );
+              }
             "
           >
-            Submit
+            Save
           </Button>
         </DialogClose>
       </DialogFooter>
@@ -51,7 +66,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Edit } from "lucide-vue-next";
+import { CircleAlert, Edit } from "lucide-vue-next";
 import {
   Dialog,
   DialogContent,
@@ -61,12 +76,20 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import type { Category } from "@/constants/types/category.type";
 import { useCategoriesStore } from "@/stores/categories";
 import DialogClose from "@/components/ui/dialog/DialogClose.vue";
 import Switch from "@/components/ui/switch/Switch.vue";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { ref } from "vue";
 
 const categoriesStore = useCategoriesStore();
+const isDraft = ref(false);
+
 defineProps({
   index: {
     type: Number,
