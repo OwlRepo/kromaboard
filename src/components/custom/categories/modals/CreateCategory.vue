@@ -24,6 +24,13 @@
             required
           />
         </div>
+        <div class="flex items-center space-x-2">
+          <Switch
+            id="airplane-mode"
+            v-model:checked="categoriesStore.isActive"
+          />
+          <Label for="airplane-mode">Active</Label>
+        </div>
       </div>
       <DialogFooter>
         <DialogClose as-child>
@@ -52,6 +59,7 @@ import {
 } from "@/components/ui/dialog";
 import DialogClose from "@/components/ui/dialog/DialogClose.vue";
 import { useCategoriesStore } from "@/stores/categories";
+import Switch from "@/components/ui/switch/Switch.vue";
 
 const categoriesStore = useCategoriesStore();
 </script>

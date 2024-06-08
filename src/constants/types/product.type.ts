@@ -1,4 +1,5 @@
 export type Product = {
+  id: string;
   created_at: string;
   category: string;
   name: string;

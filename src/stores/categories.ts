@@ -10,6 +10,7 @@ const PAGE_SIZE = 10;
 export const useCategoriesStore = defineStore("categories", {
   state: () => ({
     newCategoryName: "",
+    isActive: true,
     categories: null,
     pageCount: null,
     categoryCount: 0,
@@ -31,6 +32,7 @@ export const useCategoriesStore = defineStore("categories", {
             name: this.newCategoryName,
             created_at: dayjs().format(),
             created_by: user?.session?.user?.id,
+            is_active: this.isActive,
           },
         ])
         .select();

@@ -8,21 +8,23 @@
       <CreateProduct />
     </CardHeader>
     <CardContent>
-      <!-- <Alert
-        v-if="categoriesStore.errorMessage"
+      <Alert
+        v-if="productsStore.errorMessage"
         variant="destructive"
         class="mb-5"
       >
         <AlertCircle class="w-4 h-4" />
         <AlertTitle>Operation failed</AlertTitle>
         <AlertDescription>
-          {{ categoriesStore.errorMessage }}
+          {{ productsStore.errorMessage }}
         </AlertDescription>
       </Alert>
-      <Table v-if="categoriesStore?.categories?.length > 0">
+      <Table v-if="productsStore?.products?.length > 0">
         <TableHeader>
           <TableRow class="bg-muted">
             <TableHead class="text-black">Name</TableHead>
+            <TableHead class="text-black">Price</TableHead>
+            <TableHead class="text-black">Profit</TableHead>
             <TableHead class="text-black">Created At</TableHead>
             <TableHead class="text-black">Is Active</TableHead>
             <TableHead class="text-black">Actions</TableHead>
@@ -30,19 +32,27 @@
         </TableHeader>
         <TableBody>
           <TableRow
-            v-for="(category, index) in categoriesStore.categories"
-            :key="category.id"
+            v-for="(product, index) in productsStore.products"
+            :key="product.id"
           >
             <TableCell class="font-bold overflow-auto max-w-[300px]">
-              {{ category.name }}
+              {{ product.name }}
+            </TableCell>
+            <TableCell class="font-bold overflow-auto max-w-[300px]">
+              {{ product.price }}
+              <CircleX class="h-4 w-4 text-red-600" v-if="!product.price" />
+            </TableCell>
+            <TableCell class="font-bold overflow-auto max-w-[300px]">
+              {{ product.profit }}
+              <CircleX class="h-4 w-4 text-red-600" v-if="!product.profit" />
             </TableCell>
             <TableCell>{{
-              dayjs(category.created_at).format("MMMM DD, YYYY - hh:mm a")
+              dayjs(product.created_at).format("MMMM DD, YYYY - hh:mm a")
             }}</TableCell>
             <TableCell class="text-center">
               <CheckCircle
                 class="h-4 w-4 text-green-600"
-                v-if="category.is_active"
+                v-if="product.is_active"
               />
               <CircleX class="h-4 w-4 text-red-600" v-else />
             </TableCell>
@@ -62,19 +72,17 @@
         <p>There are no categories yet</p>
       </div>
       <Pagination
-        v-if="categoriesStore?.categories?.length > 0"
+        v-if="productsStore?.products?.length > 0"
         class="ml-auto w-fit mt-5"
         v-slot="{ page }"
-        :total="categoriesStore.categoryCount"
+        :total="productsStore.productCount"
         show-edges
         :default-page="Number(getQueryVariable('page'))"
       >
         <PaginationList v-slot="{ items }" class="flex items-center gap-1">
-          <PaginationFirst
-            @click.prevent="categoriesStore.fetchCategories(1)"
-          />
+          <PaginationFirst @click.prevent="productsStore.fetchProducts(1)" />
           <PaginationPrev
-            @click.prevent="categoriesStore.fetchCategories(page - 1)"
+            @click.prevent="productsStore.fetchProducts(page - 1)"
           />
 
           <template v-for="(item, index) in items">
@@ -87,7 +95,7 @@
               <Button
                 class="w-10 h-10 p-0"
                 :variant="item.value === page ? 'default' : 'outline'"
-                @click.prevent="categoriesStore.fetchCategories(item.value)"
+                @click.prevent="productsStore.fetchProducts(item.value)"
               >
                 {{ item.value }}
               </Button>
@@ -96,15 +104,15 @@
           </template>
 
           <PaginationNext
-            @click.prevent="categoriesStore.fetchCategories(page + 1)"
+            @click.prevent="productsStore.fetchProducts(page + 1)"
           />
           <PaginationLast
             @click.prevent="
-              categoriesStore.fetchCategories(categoriesStore.pageCount)
+              productsStore.fetchProducts(productsStore.pageCount)
             "
           />
         </PaginationList>
-      </Pagination> -->
+      </Pagination>
     </CardContent>
   </Card>
 </template>
@@ -152,4 +160,10 @@ import {
 
 import { Button } from "@/components/ui/button";
 import getQueryVariable from "@/helpers/getQueryVariable";
+import { useProductsStore } from "@/stores/products";
+const productsStore = useProductsStore();
+
+onMounted(() => {
+  productsStore.fetchProducts();
+});
 </script>

@@ -1,5 +1,6 @@
 import type { Product } from "@/constants/types/Product.type";
 import getQueryVariable from "@/helpers/getQueryVariable";
+import setQueryVariable from "@/helpers/setQueryVariable";
 import { supabase } from "@/lib/supabase";
 import dayjs from "dayjs";
 import { defineStore } from "pinia";
@@ -13,10 +14,12 @@ export const useProductsStore = defineStore("products", {
       category: "",
       price: null,
       profit: null,
+      is_active: true,
     },
-    categories: null,
+    productCategories: null,
     pageCount: null,
-    categoryCount: 0,
+    products: null,
+    productCount: 0,
     defaultPage: Number(getQueryVariable("page")) || 1,
     loading: false,
     reloading: false,
@@ -38,6 +41,7 @@ export const useProductsStore = defineStore("products", {
             profit_identifiable: this.newProduct.profit ? true : false,
             created_at: dayjs().format(),
             created_by: user?.session?.user?.id,
+            is_active: this.newProduct.is_active,
           },
           null,
           4
@@ -65,12 +69,69 @@ export const useProductsStore = defineStore("products", {
         this.errorMessage = error.message;
       }
     },
+    async fetchProducts(
+      page = Number(getQueryVariable("page")),
+      date = {
+        start: getQueryVariable("startDate"),
+        end: getQueryVariable("endDate"),
+      }
+    ) {
+      this.loading = true;
+      this.fetchProductCount(date);
+
+      setQueryVariable(
+        `?page=${page}&startDate=${date.start}&endDate=${date.end}`
+      );
+
+      const { data: products, error } = await supabase
+        .from("products")
+        .select("*")
+        .range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1)
+        .gte("created_at", date.start)
+        .lte("created_at", date.end)
+        .order("created_at", { ascending: false });
+
+      if (!error) {
+        this.products = products;
+        this.loading = false;
+      } else {
+        this.errorMessage = error.message;
+      }
+    },
+    async fetchProductCount(date: any) {
+      const { data: _, count: productCount } = await supabase
+        .from("products")
+        .select("*", { count: "exact", head: true })
+        .gte("created_at", date.start)
+        .lte("created_at", date.end);
+
+      if (!productCount) {
+        this.pageCount = 0;
+      } else {
+        this.productCount = productCount;
+        this.pageCount = Math.ceil(productCount / PAGE_SIZE);
+      }
+    },
+    async updateProduct(product: Product) {
+      const { data: _, error } = await supabase
+        .from("products")
+        .update({ ...product })
+        .eq("id", product.id)
+        .select();
+
+      if (!error) {
+        this.reloading = false;
+        this.fetchCategories();
+      } else {
+        this.errorMessage = error.message;
+      }
+    },
     async fetchCategories() {
       const { data: categories, error } = await supabase
         .from("categories")
         .select("*");
       if (!error) {
-        this.categories = categories;
+        this.productCategories = categories;
         this.loading = false;
       } else {
         this.errorMessage = error.message;

@@ -1,7 +1,7 @@
 <template>
   <Dialog>
     <DialogTrigger as-child>
-      <Button @click="prepareForm" size="sm" class="w-fit space-x-2">
+      <Button @click.prevent="prepareForm" size="sm" class="w-fit space-x-2">
         <span>New Product</span>
         <Plus class="h-4 w-4" />
       </Button>
@@ -24,7 +24,7 @@
             <SelectContent>
               <SelectGroup>
                 <SelectItem
-                  v-for="category in productStore.categories"
+                  v-for="category in productStore.productCategories"
                   :value="category.id"
                 >
                   {{ category.name }}
@@ -76,6 +76,14 @@
             ( Leave blank if not applicable )
           </span>
         </div>
+
+        <div class="flex items-center space-x-2">
+          <Switch
+            id="airplane-mode"
+            v-model:checked="productStore.newProduct.is_active"
+          />
+          <Label for="airplane-mode">Active</Label>
+        </div>
       </div>
       <DialogFooter>
         <DialogClose as-child>
@@ -119,6 +127,7 @@ import {
 import DialogClose from "@/components/ui/dialog/DialogClose.vue";
 import { useProductsStore } from "@/stores/products";
 import { onMounted } from "vue";
+import Switch from "@/components/ui/switch/Switch.vue";
 
 const productStore = useProductsStore();
 
