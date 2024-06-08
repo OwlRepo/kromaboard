@@ -30,32 +30,15 @@ export const useProductsStore = defineStore("products", {
     async createNewProduct() {
       this.reloading = true;
       let { data: user } = await supabase.auth.getSession();
-      console.log(
-        JSON.stringify(
-          {
-            name: this.newProduct.name,
-            category: this.newProduct.category,
-            price: this.newProduct.price,
-            price_identifiable: this.newProduct.price ? true : false,
-            profit: this.newProduct.profit,
-            profit_identifiable: this.newProduct.profit ? true : false,
-            created_at: dayjs().format(),
-            created_by: user?.session?.user?.id,
-            is_active: this.newProduct.is_active,
-          },
-          null,
-          4
-        )
-      );
       const { data: _, error } = await supabase
         .from("products")
         .insert([
           {
             name: this.newProduct.name,
             category: this.newProduct.category,
-            price: this.newProduct.price,
+            price: this.newProduct.price ? this.newProduct.price : null,
             price_identifiable: this.newProduct.price ? true : false,
-            profit: this.newProduct.profit,
+            profit: this.newProduct.profit ? this.newProduct.profit : null,
             profit_identifiable: this.newProduct.profit ? true : false,
             created_at: dayjs().format(),
             created_by: user?.session?.user?.id,
@@ -65,6 +48,7 @@ export const useProductsStore = defineStore("products", {
 
       if (!error) {
         this.reloading = false;
+        this.fetchProducts();
       } else {
         this.errorMessage = error.message;
       }
@@ -115,7 +99,13 @@ export const useProductsStore = defineStore("products", {
     async updateProduct(product: Product) {
       const { data: _, error } = await supabase
         .from("products")
-        .update({ ...product })
+        .update({
+          ...product,
+          price: product.price ? product.price : null,
+          profit: product.profit ? product.profit : null,
+          price_identifiable: product.price ? true : false,
+          profit_identifiable: product.profit ? true : false,
+        })
         .eq("id", product.id)
         .select();
 
