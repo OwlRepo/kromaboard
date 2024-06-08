@@ -1,7 +1,12 @@
 <template>
   <Dialog>
     <DialogTrigger as-child>
-      <Button size="sm" variant="outline" @click="isDraft = true">
+      <Button
+        aria-label="edit-category"
+        size="sm"
+        variant="outline"
+        @click="isDraft = true"
+      >
         <Edit v-if="!isDraft" class="h-4 w-4" />
         <TooltipProvider v-else>
           <Tooltip>

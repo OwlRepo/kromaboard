@@ -24,10 +24,10 @@
       <Table v-if="categoriesStore?.categories?.length > 0">
         <TableHeader>
           <TableRow class="bg-muted">
-            <TableHead class="min-w-[300px]">Name</TableHead>
-            <TableHead>Created At</TableHead>
-            <TableHead>Is Active</TableHead>
-            <TableHead>Actions</TableHead>
+            <TableHead class="text-black">Name</TableHead>
+            <TableHead class="text-black">Created At</TableHead>
+            <TableHead class="text-black">Is Active</TableHead>
+            <TableHead class="text-black">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

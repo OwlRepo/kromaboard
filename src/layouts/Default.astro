@@ -6,28 +6,31 @@
 //   '/forgot-password': '/assets/img/forgot_password_banner.webp'
 // }
 ---
+
 <html>
-    <head>
-        <title>kromaboard</title>
-    </head>
-    <body>
-        <div class="w-full lg:grid min-h-[100vh] lg:grid-cols-2">
-            <slot/>
-            <div class="hidden bg-muted lg:block">
-              <img
-                src='/assets/img/login_banner.webp'
-                decoding="async"
-                loading="lazy"
-                alt="A description of my image."
-                class="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-              />
-            </div>
-          </div>
-    </body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>kromaboard</title>
+  </head>
+  <body>
+    <div class="w-full lg:grid min-h-[100vh] lg:grid-cols-2">
+      <slot />
+      <div class="hidden bg-muted lg:block">
+        <img
+          src="/assets/img/login_banner.webp"
+          decoding="async"
+          loading="lazy"
+          alt="A description of my image."
+          class="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+        />
+      </div>
+    </div>
+  </body>
 </html>
 
 <script>
-  if(window.localStorage.getItem('hasSession')) {
-    window.location.href = '/dashboard'
+  if (window.localStorage.getItem("hasSession")) {
+    window.location.href = "/dashboard";
   }
 </script>

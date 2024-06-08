@@ -1,17 +1,17 @@
 ---
-import Login from "@/components/custom/form/Login.vue"
-import '@/styles/globals.css'
-import { ViewTransitions } from "astro:transitions"
-import Default from '@/layouts/Default.astro'
+import Login from "@/components/custom/form/Login.vue";
+import "@/styles/globals.css";
+import { ViewTransitions } from "astro:transitions";
+import Default from "@/layouts/Default.astro";
 ---
 
 <html lang="en">
- <head>
-   <title>KromaBoard</title>
-  <ViewTransitions />
- </head>
-    <Default>
-	    <Login client:visible//>
-    </Default>
- </body>
+  <head>
+    <title>KromaBoard</title>
+    <meta charset="UTF-8" />
+    <ViewTransitions />
+  </head>
+  <Default>
+    <Login client:visible />
+  </Default>
 </html>
