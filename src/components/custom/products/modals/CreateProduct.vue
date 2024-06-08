@@ -1,3 +1,99 @@
+<template>
+  <Dialog>
+    <DialogTrigger as-child>
+      <Button @click="prepareForm" size="sm" class="w-fit space-x-2">
+        <span>New Product</span>
+        <Plus class="h-4 w-4" />
+      </Button>
+    </DialogTrigger>
+    <DialogContent class="max-w-[90vw] lg:max-w-[50vw] rounded-lg">
+      <DialogHeader>
+        <DialogTitle>New Product</DialogTitle>
+        <DialogDescription> Create a new product. </DialogDescription>
+      </DialogHeader>
+      <div class="grid gap-4 py-4">
+        <div class="grid gap-2">
+          <Label
+            >Select Category
+            <span class="text-red-400">*</span>
+          </Label>
+          <Select v-model="productStore.newProduct.category">
+            <SelectTrigger class="w-full">
+              <SelectValue placeholder="Category..." />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem
+                  v-for="category in productStore.categories"
+                  :value="category.id"
+                >
+                  {{ category.name }}
+                </SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+        <div class="grid gap-2">
+          <Label for="product_name"
+            >Product Name <span class="text-red-400">*</span></Label
+          >
+          <Input
+            v-model="productStore.newProduct.name"
+            id="product_name"
+            type="text"
+            required
+          />
+        </div>
+
+        <div class="grid gap-2">
+          <Label for="product_price" class="flex justify-between"
+            >Product Price</Label
+          >
+          <Input
+            id="product_price"
+            type="number"
+            min="1"
+            required
+            v-model="productStore.newProduct.price"
+          />
+          <span class="text-xs font-normal italic ml-auto">
+            ( Leave blank if not applicable )
+          </span>
+        </div>
+
+        <div class="grid gap-2">
+          <Label for="product_profit" class="flex justify-between"
+            >Profit per unit sold</Label
+          >
+          <Input
+            id="product_profit"
+            type="number"
+            min="1"
+            required
+            v-model="productStore.newProduct.profit"
+          />
+          <span class="text-xs font-normal italic ml-auto">
+            ( Leave blank if not applicable )
+          </span>
+        </div>
+      </div>
+      <DialogFooter>
+        <DialogClose as-child>
+          <Button
+            :disabled="
+              !productStore.newProduct.name || !productStore.newProduct.category
+            "
+            type="submit"
+            @click="createNewProduct"
+          >
+            Submit
+          </Button>
+        </DialogClose>
+      </DialogFooter>
+    </DialogContent>
+  </Dialog>
+</template>
+
 <script setup lang="ts">
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,79 +117,17 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import DialogClose from "@/components/ui/dialog/DialogClose.vue";
+import { useProductsStore } from "@/stores/products";
+import { onMounted } from "vue";
+
+const productStore = useProductsStore();
+
+function createNewProduct() {
+  productStore.createNewProduct();
+}
+
+function prepareForm() {
+  productStore.$reset();
+  productStore.fetchCategories();
+}
 </script>
-
-<template>
-  <Dialog>
-    <DialogTrigger as-child>
-      <Button size="sm" class="w-fit space-x-2">
-        <span>New Product</span>
-        <Plus class="h-4 w-4" />
-      </Button>
-    </DialogTrigger>
-    <DialogContent class="max-w-[90vw] lg:max-w-[50vw] rounded-lg">
-      <DialogHeader>
-        <DialogTitle>New Product</DialogTitle>
-        <DialogDescription> Create a new product. </DialogDescription>
-      </DialogHeader>
-      <div class="grid gap-4 py-4">
-        <div class="grid gap-2">
-          <Label
-            >Select Category
-            <span class="text-red-400">*</span>
-          </Label>
-          <Select>
-            <SelectTrigger class="w-full">
-              <SelectValue placeholder="Category..." />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectItem value="apple"> Apple </SelectItem>
-                <SelectItem value="banana"> Banana </SelectItem>
-                <SelectItem value="blueberry"> Blueberry </SelectItem>
-                <SelectItem value="grapes"> Grapes </SelectItem>
-                <SelectItem value="pineapple"> Pineapple </SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
-        <div class="grid gap-2">
-          <Label for="remarks"
-            >Product Name <span class="text-red-400">*</span></Label
-          >
-          <Input
-            id="category_name"
-            type="text"
-            placeholder="Category Name..."
-            required
-          />
-        </div>
-
-        <div class="grid gap-2">
-          <Label for="product_price" class="flex justify-between"
-            >Product Price</Label
-          >
-          <Input id="product_price" type="number" min="1" required />
-          <span class="text-xs font-normal italic ml-auto">
-            ( Leave blank if not applicable )
-          </span>
-        </div>
-
-        <div class="grid gap-2">
-          <Label for="product_profit" class="flex justify-between"
-            >Profit per unit sold</Label
-          >
-          <Input id="product_profit" type="number" min="1" required />
-          <span class="text-xs font-normal italic ml-auto">
-            ( Leave blank if not applicable )
-          </span>
-        </div>
-      </div>
-      <DialogFooter>
-        <DialogClose as-child>
-          <Button type="submit"> Submit </Button>
-        </DialogClose>
-      </DialogFooter>
-    </DialogContent>
-  </Dialog>
-</template>
