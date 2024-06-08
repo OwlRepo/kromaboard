@@ -11,12 +11,12 @@ import { Filter, Table } from "@/components/custom/transactions";
   </head>
   <body>
     <Dashboard>
-      <div class="flex flex-col-reverse lg:flex-col w-full space-y-5">
-        <div class="mb-5 lg:mb-0">
-          <Filter client:only="vue" />
-        </div>
+      <div class="flex flex-col-reverse lg:flex-row w-full lg:space-x-5">
         <div class="flex-[1] w-full">
           <Table client:only="vue" />
+        </div>
+        <div class="mb-5 lg:mb-0">
+          <Filter client:only="vue" />
         </div>
       </div>
     </Dashboard>
