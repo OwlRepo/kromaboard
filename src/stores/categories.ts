@@ -1,5 +1,6 @@
 import type { Category } from "@/constants/types/category.type";
 import getQueryVariable from "@/helpers/getQueryVariable";
+import setQueryVariable from "@/helpers/setQueryVariable";
 import { supabase } from "@/lib/supabase";
 import dayjs from "dayjs";
 import { defineStore } from "pinia";
@@ -51,11 +52,9 @@ export const useCategoriesStore = defineStore("categories", {
       this.loading = true;
       this.fetchCategoryCount(date);
 
-      if (window.history.pushState) {
-        const newURL = new URL(window.location.href);
-        newURL.search = `?page=${page}&startDate=${date.start}&endDate=${date.end}`;
-        window.history.pushState({ path: newURL.href }, "", newURL.href);
-      }
+      setQueryVariable(
+        `?page=${page}&startDate=${date.start}&endDate=${date.end}`
+      );
 
       const { data: categories, error } = await supabase
         .from("categories")

@@ -12,7 +12,11 @@
         <div class="flex flex-row items-center">
           <DateRangePicker @filterTable="filterByDate" />
         </div>
+        <hr class="border-muted-foreground/10" />
       </div>
+      <a :href="defualtCategoryPageRoute.path">
+        <Button class="w-full">Reset</Button>
+      </a>
     </CardContent>
   </Card>
 </template>
@@ -28,9 +32,14 @@ import {
 import DateRangePicker from "@/components/custom/form/DateRangePicker.vue";
 import { useCategoriesStore } from "@/stores/categories";
 import dayjs from "dayjs";
+import Button from "@/components/ui/button/Button.vue";
+import { LOGGED_IN_ROUTES } from "@/constants";
+import setQueryVariable from "@/helpers/setQueryVariable";
 
 const categoriesStore = useCategoriesStore();
-
+const defualtCategoryPageRoute = LOGGED_IN_ROUTES.find((route) =>
+  route.path.includes("categories")
+);
 function filterByDate(data) {
   const date = {
     start: dayjs(`${data.start.year}-${data.start.month}-${data.start.day}`)
@@ -41,11 +50,7 @@ function filterByDate(data) {
       .format(),
   };
 
-  if (window.history.pushState) {
-    const newURL = new URL(window.location.href);
-    newURL.search = `&startDate=${date.start}&endDate=${date.end}`;
-    window.history.pushState({ path: newURL.href }, "", newURL.href);
-  }
+  setQueryVariable(`&startDate=${date.start}&endDate=${date.end}`);
   categoriesStore.fetchCategories(1, date);
 }
 </script>
