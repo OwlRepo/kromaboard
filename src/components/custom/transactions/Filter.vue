@@ -1,5 +1,5 @@
 <template>
-  <Card>
+  <Card class="lg:sticky lg:top-10">
     <CardHeader class="flex flex-row items-center justify-between">
       <div class="grid gap-2">
         <CardTitle>Filter</CardTitle>
@@ -8,87 +8,15 @@
     </CardHeader>
     <CardContent class="flex flex-col space-y-6 items-stretch">
       <div class="flex flex-col space-y-2">
-        <b>Category</b>
-        <Select>
-          <SelectTrigger class="w-full">
-            <SelectValue placeholder="Select a category" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <!-- <SelectLabel>Products</SelectLabel> -->
-              <SelectItem value="apple"> Apple </SelectItem>
-              <SelectItem value="banana"> Banana </SelectItem>
-              <SelectItem value="blueberry"> Blueberry </SelectItem>
-              <SelectItem value="grapes"> Grapes </SelectItem>
-              <SelectItem value="pineapple"> Pineapple </SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-      </div>
-      <div class="flex flex-col space-y-2">
-        <b>Product</b>
-        <Select>
-          <SelectTrigger class="w-full">
-            <SelectValue placeholder="Select a product" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <!-- <SelectLabel>Products</SelectLabel> -->
-              <SelectItem value="apple"> Apple </SelectItem>
-              <SelectItem value="banana"> Banana </SelectItem>
-              <SelectItem value="blueberry"> Blueberry </SelectItem>
-              <SelectItem value="grapes"> Grapes </SelectItem>
-              <SelectItem value="pineapple"> Pineapple </SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-      </div>
-      <div class="flex flex-col space-y-2">
-        <b>Transaction Date</b>
+        <b>Created At</b>
         <div class="flex flex-row items-center">
-          <DateRangePicker />
+          <DateRangePicker @filterTable="filterByDate" />
         </div>
+        <hr class="border-muted-foreground/10" />
       </div>
-      <div class="flex flex-col space-y-2">
-        <b>Status</b>
-        <div
-          class="flex flex-col space-y-2 xl:space-y-0 xl:flex-row xl:space-x-10"
-        >
-          <div class="flex flex-col space-y-2">
-            <div>
-              <Checkbox id="success" name="success" aria-label="success" />
-              <label
-                for="success"
-                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                Success
-              </label>
-            </div>
-            <div>
-              <Checkbox name="pending" id="pending" aria-label="pending" />
-              <label
-                for="pending"
-                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                Pending
-              </label>
-            </div>
-            <div>
-              <Checkbox name="refunded" id="refunded" aria-label="refunded" />
-              <label
-                for="refunded"
-                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                Refunded
-              </label>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="flex flex-row justify-between space-x-2">
-        <Button class="w-full" variant="outline">Reset</Button>
-        <Button class="w-full">Filter</Button>
-      </div>
+      <a :href="defualtCategoryPageRoute.path">
+        <Button class="w-full">Reset</Button>
+      </a>
     </CardContent>
   </Card>
 </template>
@@ -101,16 +29,28 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
 import DateRangePicker from "@/components/custom/form/DateRangePicker.vue";
+import dayjs from "dayjs";
 import Button from "@/components/ui/button/Button.vue";
+import { LOGGED_IN_ROUTES } from "@/constants";
+import setQueryVariable from "@/lib/helpers/setQueryVariable";
+import { useTransactionsStore } from "@/stores/transactions";
+
+const transactionsStore = useTransactionsStore();
+const defualtCategoryPageRoute = LOGGED_IN_ROUTES.find((route) =>
+  route.path.includes("transactions")
+);
+function filterByDate(data) {
+  const date = {
+    start: dayjs(`${data.start.year}-${data.start.month}-${data.start.day}`)
+      .startOf("day")
+      .format(),
+    end: dayjs(`${data.end.year}-${data.end.month}-${data.end.day}`)
+      .endOf("day")
+      .format(),
+  };
+
+  setQueryVariable(`&startDate=${date.start}&endDate=${date.end}`);
+  transactionsStore.fetchTransactions(1, date);
+}
 </script>
