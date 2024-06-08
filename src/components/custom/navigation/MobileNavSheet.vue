@@ -57,7 +57,7 @@ defineProps({
             {{ route.name }}
           </a>
         </nav>
-        <div class="mt-auto">
+        <!-- <div class="mt-auto">
           <Card>
             <CardHeader>
               <CardTitle>Check Plugins</CardTitle>
@@ -70,7 +70,7 @@ defineProps({
               <Button size="sm" class="w-full"> Marketplace </Button>
             </CardContent>
           </Card>
-        </div>
+        </div> -->
       </SheetContent>
     </Sheet>
   </div>

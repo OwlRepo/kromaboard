@@ -40,15 +40,15 @@ onMounted(() => {
             <Package2 class="h-6 w-6" />
             <span class="">kromaboard</span>
           </a>
-          <Button variant="outline" size="icon" class="ml-auto h-8 w-8">
+          <!-- <Button variant="outline" size="icon" class="ml-auto h-8 w-8">
             <Bell class="h-4 w-4" />
             <span class="sr-only">Toggle notifications</span>
-          </Button>
+          </Button> -->
         </div>
         <div class="flex-1">
           <slot name="side-bar" />
         </div>
-        <div class="mt-auto p-4">
+        <!-- <div class="mt-auto p-4">
           <Card>
             <CardHeader class="p-2 pt-0 md:p-4">
               <CardTitle>Check Plugins</CardTitle>
@@ -61,15 +61,15 @@ onMounted(() => {
               <Button size="sm" class="w-full"> Marketplace </Button>
             </CardContent>
           </Card>
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="flex flex-col">
       <header
-        class="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6"
+        class="flex justify-between h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6"
       >
         <slot name="mobile-nav-sheet" />
-        <div class="w-full flex-1">
+        <!-- <div class="w-full flex-1">
           <form>
             <div class="relative">
               <Search
@@ -85,7 +85,7 @@ onMounted(() => {
               />
             </div>
           </form>
-        </div>
+        </div> -->
         <slot name="user-dropdown-menu" />
       </header>
       <main class="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 bg-muted">
