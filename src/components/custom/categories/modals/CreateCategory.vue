@@ -1,7 +1,7 @@
 <template>
   <Dialog>
     <DialogTrigger as-child>
-      <Button size="sm" class="w-fit space-x-2">
+      <Button @click.prevent="prepareForm" size="sm" class="w-fit space-x-2">
         <span>New Category</span>
         <Plus class="h-4 w-4" />
       </Button>
@@ -61,10 +61,19 @@ import DialogClose from "@/components/ui/dialog/DialogClose.vue";
 import { useCategoriesStore } from "@/stores/categories";
 import Switch from "@/components/ui/switch/Switch.vue";
 import { onUnmounted } from "vue";
+import getQueryVariable from "@/lib/helpers/getQueryVariable";
 
 const categoriesStore = useCategoriesStore();
+const defaultForm = {
+  newCategoryName: "",
+  isActive: true,
+};
 
 onUnmounted(() => {
   categoriesStore.$reset();
 });
+
+function prepareForm() {
+  categoriesStore.$state = { ...defaultForm };
+}
 </script>

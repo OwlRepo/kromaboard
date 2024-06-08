@@ -57,7 +57,9 @@
             </TableCell>
 
             <TableCell>
-              {{ transaction.status }}
+              <Badge :variant="transaction.status">{{
+                transaction.status
+              }}</Badge>
             </TableCell>
 
             <TableCell>
@@ -169,6 +171,7 @@ import { Button } from "@/components/ui/button";
 import getQueryVariable from "@/lib/helpers/getQueryVariable";
 import CreateTransaction from "./modals/CreateTransaction.vue";
 import { useTransactionsStore } from "@/stores/transactions";
+import Badge from "@/components/ui/badge/Badge.vue";
 
 const transactionsStore = useTransactionsStore();
 

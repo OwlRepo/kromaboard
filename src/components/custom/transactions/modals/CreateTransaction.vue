@@ -1,7 +1,7 @@
 <template>
   <Dialog>
     <DialogTrigger as-child>
-      <Button size="sm" class="w-fit space-x-2">
+      <Button @click.prevent="prepareForm" size="sm" class="w-fit space-x-2">
         <span>New Transaction</span>
         <Plus class="h-4 w-4" />
       </Button>
@@ -11,7 +11,6 @@
         <DialogTitle>New Transaction</DialogTitle>
         <DialogDescription> Create a new transaction. </DialogDescription>
       </DialogHeader>
-      {{ transactionsStore.newTransaction }}
       <div class="grid gap-4 py-4">
         <div class="grid gap-2">
           <Label
@@ -164,18 +163,26 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import DialogClose from "@/components/ui/dialog/DialogClose.vue";
-import { onMounted, onUnmounted, watch } from "vue";
+import { watch } from "vue";
 import { useTransactionsStore } from "@/stores/transactions";
 
 const transactionsStore = useTransactionsStore();
+const defaultForm = {
+  categoryId: "",
+  product: "",
+  price: null,
+  profit: null,
+  quantity: null,
+  status: null,
+  remarks: null,
+};
 
-onMounted(() => {
+function prepareForm() {
+  transactionsStore.newTransaction = { ...defaultForm };
+  transactionsStore.categories = null;
+  transactionsStore.products = null;
   transactionsStore.fetchCategories();
-});
-
-onUnmounted(() => {
-  transactionsStore.$reset();
-});
+}
 
 watch(
   () => transactionsStore?.newTransaction?.categoryId,
