@@ -1,3 +1,4 @@
+import type { Product } from "@/constants/types/product.type";
 import type { Transaction } from "@/constants/types/transaction.type";
 import getQueryVariable from "@/lib/helpers/getQueryVariable";
 import setQueryVariable from "@/lib/helpers/setQueryVariable";
@@ -108,7 +109,7 @@ export const useTransactionsStore = defineStore("transactions", {
         .update({
           ...transaction,
           product_name: this.products.find(
-            (product) => product.id === transaction.product_id
+            (product: Product) => product.id === transaction.product_id
           ).name,
         })
         .eq("id", transaction.id)
@@ -131,7 +132,7 @@ export const useTransactionsStore = defineStore("transactions", {
         this.errorMessage = error.message;
       }
     },
-    async fetchProductsByCategoryId(id) {
+    async fetchProductsByCategoryId(id: string) {
       const { data: products, error } = await supabase
         .from("products")
         .select("*")

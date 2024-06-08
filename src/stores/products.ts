@@ -1,4 +1,4 @@
-import type { Product } from "@/constants/types/Product.type";
+import type { Product } from "@/constants/types/product.type";
 import getQueryVariable from "@/lib/helpers/getQueryVariable";
 import setQueryVariable from "@/lib/helpers/setQueryVariable";
 import { supabase } from "@/lib/supabase";

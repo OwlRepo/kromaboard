@@ -13,7 +13,7 @@ export const useSignUpStore = defineStore("sign-up", {
   getters: {},
   actions: {
     async userSignUp() {
-      let { data, error } = await supabase.auth.signUp({
+      let { data: _, error } = await supabase.auth.signUp({
         email: this.email,
         password: this.password,
       });
