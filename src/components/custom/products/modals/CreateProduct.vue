@@ -126,7 +126,6 @@ import {
 } from "@/components/ui/select";
 import DialogClose from "@/components/ui/dialog/DialogClose.vue";
 import { useProductsStore } from "@/stores/products";
-import { onMounted } from "vue";
 import Switch from "@/components/ui/switch/Switch.vue";
 
 const productStore = useProductsStore();
@@ -136,7 +135,6 @@ function createNewProduct() {
 }
 
 function prepareForm() {
-  productStore.$reset();
   productStore.fetchCategories();
 }
 </script>
