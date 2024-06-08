@@ -5,11 +5,7 @@
         aria-label="edit-category"
         size="sm"
         variant="outline"
-        @click="
-          () => {
-            prepareForm(), (isDraft = true);
-          }
-        "
+        @click="prepareForm"
       >
         <Edit v-if="!isDraft" class="h-4 w-4" />
         <TooltipProvider v-else>
@@ -32,17 +28,17 @@
       <div class="grid gap-4 py-4">
         <div class="grid gap-2">
           <Label
-            >Select Category
+            >Select category
             <span class="text-red-400">*</span>
           </Label>
-          <Select v-model="productStore.products[index].category">
+          <Select v-model="transactionsStore.transactions[index].category_id">
             <SelectTrigger class="w-full">
               <SelectValue placeholder="Category..." />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
                 <SelectItem
-                  v-for="category in productStore.productCategories"
+                  v-for="category in transactionsStore.categories"
                   :value="category.id"
                 >
                   {{ category.name }}
@@ -52,55 +48,92 @@
           </Select>
         </div>
         <div class="grid gap-2">
-          <Label for="product_name"
-            >Product Name <span class="text-red-400">*</span></Label
-          >
+          <Label
+            >Select product
+            <span class="text-red-400">*</span>
+          </Label>
+          <Select v-model="transactionsStore.transactions[index].product_id">
+            <SelectTrigger class="w-full">
+              <SelectValue placeholder="Product..." />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem
+                  v-for="product in transactionsStore.products"
+                  :value="product.id"
+                >
+                  {{ product.name }}
+                </SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+        <div class="grid gap-2">
+          <Label for="transaction_amount"
+            >Transaction Amount
+            <span class="text-red-400">*</span>
+          </Label>
           <Input
-            v-model="productStore.products[index].name"
-            id="product_name"
+            v-model="transactionsStore.transactions[index].transaction_amount"
+            id="transaction_amount"
+            type="number"
+            min="1"
+            required
+          />
+        </div>
+        <div class="grid gap-2">
+          <Label for="business_profit"
+            >Business Profit
+            <span class="text-red-400">*</span>
+          </Label>
+          <Input
+            v-model="transactionsStore.transactions[index].business_profit"
+            id="business_profit"
+            type="number"
+            min="1"
+            required
+          />
+        </div>
+        <div class="grid gap-2">
+          <Label for="item_count"
+            >Quantity
+            <span class="text-red-400">*</span>
+          </Label>
+          <Input
+            v-model="transactionsStore.transactions[index].quantity"
+            id="item_count"
+            type="number"
+            min="1"
+            required
+          />
+        </div>
+        <div class="grid gap-2">
+          <Label
+            >Transaction Status
+            <span class="text-red-400">*</span>
+          </Label>
+          <Select v-model="transactionsStore.transactions[index].status">
+            <SelectTrigger class="w-full">
+              <SelectValue placeholder="Status..." />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="success"> Success </SelectItem>
+                <SelectItem value="pending"> Pending </SelectItem>
+                <SelectItem value="refunded"> Refunded </SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+        <div class="grid gap-2">
+          <Label for="remarks">Remarks (optional)</Label>
+          <Input
+            v-model="transactionsStore.transactions[index].remarks"
+            id="remarks"
             type="text"
-            required
-          />
-        </div>
-
-        <div class="grid gap-2">
-          <Label for="product_price" class="flex justify-between"
-            >Product Price</Label
-          >
-          <Input
-            id="product_price"
-            type="number"
             min="1"
             required
-            v-model="productStore.products[index].price"
           />
-          <span class="text-xs font-normal italic ml-auto">
-            ( Leave blank if not applicable )
-          </span>
-        </div>
-
-        <div class="grid gap-2">
-          <Label for="product_profit" class="flex justify-between"
-            >Profit per unit sold</Label
-          >
-          <Input
-            id="product_profit"
-            type="number"
-            min="1"
-            required
-            v-model="productStore.products[index].profit"
-          />
-          <span class="text-xs font-normal italic ml-auto">
-            ( Leave blank if not applicable )
-          </span>
-        </div>
-
-        <div class="flex items-center space-x-2">
-          <Switch
-            id="airplane-mode"
-            v-model:checked="productStore.products[index].is_active"
-          />
-          <Label for="airplane-mode">Active</Label>
         </div>
       </div>
       <DialogFooter>
@@ -110,7 +143,9 @@
             @click.prevent="
               () => {
                 isDraft = false;
-                productStore.updateProduct(productStore.products[index]);
+                transactionsStore.updateTransaction(
+                  transactionsStore.transactions[index]
+                );
               }
             "
           >
@@ -136,7 +171,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { useCategoriesStore } from "@/stores/categories";
 import DialogClose from "@/components/ui/dialog/DialogClose.vue";
 import Switch from "@/components/ui/switch/Switch.vue";
 import {
@@ -146,20 +180,26 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { ref } from "vue";
-import { useProductsStore } from "@/stores/products";
 import Select from "@/components/ui/select/Select.vue";
 import SelectTrigger from "@/components/ui/select/SelectTrigger.vue";
 import SelectValue from "@/components/ui/select/SelectValue.vue";
 import SelectContent from "@/components/ui/select/SelectContent.vue";
 import SelectGroup from "@/components/ui/select/SelectGroup.vue";
 import SelectItem from "@/components/ui/select/SelectItem.vue";
+import { useTransactionsStore } from "@/stores/transactions";
 
-const productStore = useProductsStore();
+const transactionsStore = useTransactionsStore();
 const isDraft = ref(false);
+
 function prepareForm() {
-  productStore.fetchCategories();
+  isDraft.value = true;
+  transactionsStore.fetchCategories();
+  transactionsStore.fetchProductsByCategoryId(
+    transactionsStore.transactions[props.index].category_id
+  );
 }
-defineProps({
+
+const props = defineProps({
   index: {
     type: Number,
     required: true,

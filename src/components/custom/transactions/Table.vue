@@ -39,7 +39,7 @@
             v-for="(transaction, index) in transactionsStore.transactions"
             :key="transaction.id"
           >
-            <TableCell class="font-bold overflow-auto max-w-[300px]">
+            <TableCell class="font-bold overflow-auto max-w-[300px] uppercase">
               {{ transaction.product_name }}
             </TableCell>
             <TableCell>{{
@@ -64,6 +64,10 @@
 
             <TableCell>
               {{ transaction.remarks }}
+              <CircleX
+                class="h-4 w-4 text-red-600"
+                v-if="!transaction.remarks"
+              />
             </TableCell>
             <TableCell>
               <div class="flex flex-row space-x-2">
@@ -151,7 +155,7 @@ import {
   CircleX,
   PackageSearch,
 } from "lucide-vue-next";
-import EditTransaction from "./modals/EdiTransaction.vue";
+import EditTransaction from "./modals/EditTransaction.vue";
 import { onMounted } from "vue";
 import Alert from "@/components/ui/alert/Alert.vue";
 import AlertTitle from "@/components/ui/alert/AlertTitle.vue";

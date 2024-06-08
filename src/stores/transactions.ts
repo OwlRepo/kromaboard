@@ -1,4 +1,4 @@
-import type { Product } from "@/constants/types/Product.type";
+import type { Transaction } from "@/constants/types/transaction.type";
 import getQueryVariable from "@/lib/helpers/getQueryVariable";
 import setQueryVariable from "@/lib/helpers/setQueryVariable";
 import { supabase } from "@/lib/supabase";
@@ -99,6 +99,26 @@ export const useTransactionsStore = defineStore("transactions", {
       } else {
         this.transactionCount = transactionCount;
         this.pageCount = Math.ceil(transactionCount / PAGE_SIZE);
+      }
+    },
+
+    async updateTransaction(transaction: Transaction) {
+      const { data: _, error } = await supabase
+        .from("transaction_history")
+        .update({
+          ...transaction,
+          product_name: this.products.find(
+            (product) => product.id === transaction.product_id
+          ).name,
+        })
+        .eq("id", transaction.id)
+        .select();
+
+      if (!error) {
+        this.reloading = false;
+        this.fetchTransactions();
+      } else {
+        this.errorMessage = error.message;
       }
     },
     async fetchCategories() {
