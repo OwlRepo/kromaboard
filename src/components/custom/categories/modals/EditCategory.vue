@@ -90,7 +90,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { ref } from "vue";
+import { onUnmounted, ref } from "vue";
 
 const categoriesStore = useCategoriesStore();
 const isDraft = ref(false);
@@ -100,5 +100,9 @@ defineProps({
     type: Number,
     required: true,
   },
+});
+
+onUnmounted(() => {
+  categoriesStore.$reset();
 });
 </script>

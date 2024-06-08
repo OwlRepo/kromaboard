@@ -24,11 +24,11 @@
       <Table v-if="transactionsStore?.transactions?.length > 0">
         <TableHeader>
           <TableRow class="bg-muted">
-            <TableHead class="text-black">Created at</TableHead>
             <TableHead class="text-black">Product</TableHead>
+            <TableHead class="text-black">Created at</TableHead>
             <TableHead class="text-black">Price</TableHead>
             <TableHead class="text-black">Profit</TableHead>
-            <TableHead class="text-black">Item count</TableHead>
+            <TableHead class="text-black">Quantity</TableHead>
             <TableHead class="text-black">Status</TableHead>
             <TableHead class="text-black">Remarks</TableHead>
             <TableHead class="text-black">Action</TableHead>
@@ -39,29 +39,28 @@
             v-for="(transaction, index) in transactionsStore.transactions"
             :key="transaction.id"
           >
-            <TableCell>{{
-              dayjs(transaction.created_at).format("MMMM DD, YYYY - hh:mm a")
-            }}</TableCell>
             <TableCell class="font-bold overflow-auto max-w-[300px]">
               {{ transaction.product_name }}
             </TableCell>
-            <TableCell class="font-bold overflow-auto max-w-[300px]">
+            <TableCell>{{
+              dayjs(transaction.created_at).format("MMMM DD, YYYY - hh:mm a")
+            }}</TableCell>
+            <TableCell>
               {{ transaction.transaction_amount }}
-              <CircleX class="h-4 w-4 text-red-600" v-if="!transaction.price" />
             </TableCell>
-            <TableCell class="font-bold overflow-auto max-w-[300px]">
+            <TableCell>
               {{ transaction.business_profit }}
             </TableCell>
 
-            <TableCell class="font-bold overflow-auto max-w-[300px]">
-              {{ transaction.item_count }}
+            <TableCell>
+              {{ transaction.quantity }}
             </TableCell>
 
-            <TableCell class="font-bold overflow-auto max-w-[300px]">
+            <TableCell>
               {{ transaction.status }}
             </TableCell>
 
-            <TableCell class="font-bold overflow-auto max-w-[300px]">
+            <TableCell>
               {{ transaction.remarks }}
             </TableCell>
             <TableCell>

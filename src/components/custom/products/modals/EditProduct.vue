@@ -145,7 +145,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { ref } from "vue";
+import { onUnmounted, ref } from "vue";
 import { useProductsStore } from "@/stores/products";
 import Select from "@/components/ui/select/Select.vue";
 import SelectTrigger from "@/components/ui/select/SelectTrigger.vue";
@@ -164,5 +164,9 @@ defineProps({
     type: Number,
     required: true,
   },
+});
+
+onUnmounted(() => {
+  productStore.$reset();
 });
 </script>

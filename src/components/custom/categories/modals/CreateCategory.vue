@@ -60,6 +60,11 @@ import {
 import DialogClose from "@/components/ui/dialog/DialogClose.vue";
 import { useCategoriesStore } from "@/stores/categories";
 import Switch from "@/components/ui/switch/Switch.vue";
+import { onUnmounted } from "vue";
 
 const categoriesStore = useCategoriesStore();
+
+onUnmounted(() => {
+  categoriesStore.$reset();
+});
 </script>

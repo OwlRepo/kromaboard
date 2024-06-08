@@ -127,6 +127,7 @@ import {
 import DialogClose from "@/components/ui/dialog/DialogClose.vue";
 import { useProductsStore } from "@/stores/products";
 import Switch from "@/components/ui/switch/Switch.vue";
+import { onUnmounted } from "vue";
 
 const productStore = useProductsStore();
 
@@ -137,4 +138,8 @@ function createNewProduct() {
 function prepareForm() {
   productStore.fetchCategories();
 }
+
+onUnmounted(() => {
+  productStore.$reset();
+});
 </script>
