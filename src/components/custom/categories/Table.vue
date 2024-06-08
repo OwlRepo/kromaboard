@@ -3,9 +3,7 @@
     <CardHeader class="flex flex-row items-center justify-between">
       <div class="grid gap-2">
         <CardTitle>Categories</CardTitle>
-        <CardDescription>
-          Recent transactions from your store.
-        </CardDescription>
+        <CardDescription> Recent categories from your store. </CardDescription>
       </div>
       <CreateCategory />
     </CardHeader>

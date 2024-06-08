@@ -1,11 +1,5 @@
 import dayjs from "dayjs";
-import {
-  Home,
-  LineChart,
-  Package,
-  ArrowLeftRight,
-  Blocks,
-} from "lucide-vue-next";
+import { Home, LineChart, Package, Blocks, DollarSign } from "lucide-vue-next";
 
 type LoggedInRoute = {
   name: string;
@@ -21,8 +15,11 @@ const LOGGED_IN_ROUTES: Array<LoggedInRoute> = [
   },
   {
     name: "Transactions",
-    path: "/transactions",
-    icon: ArrowLeftRight,
+    path: `/transactions?page=1&startDate=${dayjs()
+      .startOf("day")
+      .subtract(3, "days")
+      .format()}&endDate=${dayjs().endOf("day").format()}`,
+    icon: DollarSign,
   },
   {
     name: "Categories",
