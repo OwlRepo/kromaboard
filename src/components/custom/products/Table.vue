@@ -69,7 +69,7 @@
         class="flex flex-col items-center w-full text-muted-foreground space-y-3 my-10"
       >
         <PackageSearch class="h-12 w-12" />
-        <p>There are no categories yet</p>
+        <p>There are no products yet</p>
       </div>
       <Pagination
         v-if="productsStore?.products?.length > 0"
