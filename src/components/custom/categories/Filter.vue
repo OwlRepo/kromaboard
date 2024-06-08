@@ -34,7 +34,7 @@ import { useCategoriesStore } from "@/stores/categories";
 import dayjs from "dayjs";
 import Button from "@/components/ui/button/Button.vue";
 import { LOGGED_IN_ROUTES } from "@/constants";
-import setQueryVariable from "@/helpers/setQueryVariable";
+import setQueryVariable from "@/lib/helpers/setQueryVariable";
 
 const categoriesStore = useCategoriesStore();
 const defualtCategoryPageRoute = LOGGED_IN_ROUTES.find((route) =>

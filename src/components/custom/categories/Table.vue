@@ -153,7 +153,7 @@ import {
 } from "@/components/ui/pagination";
 
 import { Button } from "@/components/ui/button";
-import getQueryVariable from "@/helpers/getQueryVariable";
+import getQueryVariable from "@/lib/helpers/getQueryVariable";
 
 const categoriesStore = useCategoriesStore();
 

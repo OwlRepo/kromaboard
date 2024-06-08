@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import dayjs from "dayjs";
-import getQueryVariable from "@/helpers/getQueryVariable";
+import getQueryVariable from "@/lib/helpers/getQueryVariable";
 
 const df = new DateFormatter("en-US", {
   dateStyle: "medium",

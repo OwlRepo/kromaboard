@@ -1,6 +1,6 @@
 import type { Product } from "@/constants/types/Product.type";
-import getQueryVariable from "@/helpers/getQueryVariable";
-import setQueryVariable from "@/helpers/setQueryVariable";
+import getQueryVariable from "@/lib/helpers/getQueryVariable";
+import setQueryVariable from "@/lib/helpers/setQueryVariable";
 import { supabase } from "@/lib/supabase";
 import dayjs from "dayjs";
 import { defineStore } from "pinia";

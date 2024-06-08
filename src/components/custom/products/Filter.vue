@@ -33,7 +33,7 @@ import DateRangePicker from "@/components/custom/form/DateRangePicker.vue";
 import dayjs from "dayjs";
 import Button from "@/components/ui/button/Button.vue";
 import { LOGGED_IN_ROUTES } from "@/constants";
-import setQueryVariable from "@/helpers/setQueryVariable";
+import setQueryVariable from "@/lib/helpers/setQueryVariable";
 import { useProductsStore } from "@/stores/products";
 
 const productsStore = useProductsStore();
