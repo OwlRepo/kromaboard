@@ -24,7 +24,7 @@
           <div class="flex flex-col space-y-2">
             <b>Category</b>
             <div class="flex flex-row items-center">
-              <Select v-model="transactionsStore.newTransaction.categoryId">
+              <Select v-model="transactionsStore.filter.categoryId">
                 <SelectTrigger class="w-full">
                   <SelectValue placeholder="Select category..." />
                 </SelectTrigger>
@@ -43,7 +43,7 @@
           </div>
           <div class="flex flex-col space-y-2">
             <b>Status</b>
-            <Select v-model="transactionsStore.newTransaction.status">
+            <Select v-model="transactionsStore.filter.status">
               <SelectTrigger class="w-full">
                 <SelectValue placeholder="Status..." />
               </SelectTrigger>
@@ -97,13 +97,17 @@ import SelectValue from "@/components/ui/select/SelectValue.vue";
 import SelectContent from "@/components/ui/select/SelectContent.vue";
 import SelectGroup from "@/components/ui/select/SelectGroup.vue";
 import SelectItem from "@/components/ui/select/SelectItem.vue";
-import { watch } from "vue";
+import { onUnmounted, watch } from "vue";
 import getQueryVariable from "@/lib/helpers/getQueryVariable";
 
 const transactionsStore = useTransactionsStore();
 const defualtCategoryPageRoute = LOGGED_IN_ROUTES.find((route) =>
   route.path.includes("transactions")
 );
+const defaultForm = {
+  categoryId: null,
+  status: null,
+};
 function filterByDate(data: any) {
   const date = {
     start: dayjs(`${data.start.year}-${data.start.month}-${data.start.day}`)
@@ -155,6 +159,10 @@ function filterByStatus(status: string) {
 function prepareFilter() {
   transactionsStore.fetchCategories();
 }
+
+onUnmounted(() => {
+  transactionsStore.resetFilters();
+});
 
 watch(
   () => transactionsStore.getSelectedCategoryIdFilter,

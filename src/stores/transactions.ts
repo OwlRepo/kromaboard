@@ -19,6 +19,10 @@ export const useTransactionsStore = defineStore("transactions", {
       status: null,
       remarks: null,
     },
+    filter: {
+      categoryId: null,
+      status: null,
+    },
     categories: null,
     products: null,
     pageCount: null,
@@ -32,10 +36,10 @@ export const useTransactionsStore = defineStore("transactions", {
   }),
   getters: {
     getSelectedCategoryIdFilter: (state) => {
-      return state.newTransaction.categoryId;
+      return state.filter.categoryId;
     },
     getSelectedStatusFilter: (state) => {
-      return state.newTransaction.status;
+      return state.filter.status;
     },
   },
   actions: {
@@ -178,14 +182,9 @@ export const useTransactionsStore = defineStore("transactions", {
       }
     },
     resetFilters() {
-      this.newTransaction = {
-        categoryId: "",
-        product: "",
-        price: null,
-        profit: null,
-        quantity: null,
+      this.filter = {
+        categoryId: null,
         status: null,
-        remarks: null,
       };
     },
   },
