@@ -17,7 +17,7 @@ const currentRoute = Astro.url.pathname;
   </head>
   <body>
     <NavBar client:only="vue">
-      <Sidebar slot="side-bar" currentRoute={currentRoute} />
+      <Sidebar slot="side-bar" client:only="vue" />
       <UserDropdownMenu slot="user-dropdown-menu" client:only="vue" />
       <MobileNavSheet
         slot="mobile-nav-sheet"

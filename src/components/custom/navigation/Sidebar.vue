@@ -1,9 +1,6 @@
 <script setup>
 import { LOGGED_IN_ROUTES } from "@/constants";
-
-defineProps({
-  currentRoute: String,
-});
+const currentRoute = window.location.pathname;
 </script>
 
 <template>

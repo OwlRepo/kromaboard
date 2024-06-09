@@ -11,10 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { LOGGED_IN_ROUTES } from "@/constants";
-
-defineProps({
-  currentRoute: String,
-});
+const currentRoute = window.location.pathname;
 </script>
 
 <template>
@@ -42,16 +39,16 @@ defineProps({
             :href="route.path"
             class="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2"
             :class="{
-              'bg-muted text-foreground': currentRoute.includes(route.path),
+              'bg-muted text-foreground': route.path.includes(currentRoute),
               'text-muted-foreground hover:text-foreground':
-                !currentRoute.includes(route.path),
+                !route.path.includes(currentRoute),
             }"
           >
             <component
               :is="route.icon"
               class="w-4"
               :class="{
-                'bg-muted text-foreground': currentRoute.includes(route.path),
+                'bg-muted text-foreground': route.path.includes(currentRoute),
               }"
             />
             {{ route.name }}
