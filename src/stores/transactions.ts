@@ -34,6 +34,9 @@ export const useTransactionsStore = defineStore("transactions", {
     getSelectedCategoryIdFilter: (state) => {
       return state.newTransaction.categoryId;
     },
+    getSelectedStatusFilter: (state) => {
+      return state.newTransaction.status;
+    },
   },
   actions: {
     async createNewTransaction() {
@@ -72,13 +75,16 @@ export const useTransactionsStore = defineStore("transactions", {
       },
       categoryId = getQueryVariable("categoryId") === "undefined"
         ? undefined
-        : getQueryVariable("categoryId")
+        : getQueryVariable("categoryId"),
+      status = getQueryVariable("status") === "undefined"
+        ? undefined
+        : getQueryVariable("status")
     ) {
       this.loading = true;
-      this.fetchTransactionsCount(date, categoryId);
+      this.fetchTransactionsCount(date, categoryId, status);
 
       setQueryVariable(
-        `?page=${page}&startDate=${date.start}&endDate=${date.end}&categoryId=${categoryId}`
+        `?page=${page}&startDate=${date.start}&endDate=${date.end}&categoryId=${categoryId}&status=${status}`
       );
 
       const res = supabase
@@ -93,6 +99,10 @@ export const useTransactionsStore = defineStore("transactions", {
         res.eq("category_id", categoryId);
       }
 
+      if (status) {
+        res.eq("status", status);
+      }
+
       if (!(await res).error) {
         this.transactions = (await res).data;
         this.loading = false;
@@ -100,7 +110,11 @@ export const useTransactionsStore = defineStore("transactions", {
         this.errorMessage = (await res).error.message;
       }
     },
-    async fetchTransactionsCount(date: any, categoryId?: string) {
+    async fetchTransactionsCount(
+      date: any,
+      categoryId?: string,
+      status?: string
+    ) {
       const res = supabase
         .from("transaction_history")
         .select("*", { count: "exact", head: true })
@@ -110,6 +124,11 @@ export const useTransactionsStore = defineStore("transactions", {
       if (categoryId) {
         res.eq("category_id", categoryId);
       }
+
+      if (status) {
+        res.eq("status", status);
+      }
+
       if ((await res).error) {
         this.pageCount = 0;
       } else {

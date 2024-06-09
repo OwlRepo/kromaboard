@@ -17,7 +17,7 @@
         <div class="flex flex-row items-center justify-between">
           <div class="grid">
             <b class="text-lg">Filter</b>
-            <p>Filter by product, date and status.</p>
+            <p>Filter by category, status or date.</p>
           </div>
         </div>
         <div class="flex flex-col space-y-6 items-stretch">
@@ -40,6 +40,21 @@
                 </SelectContent>
               </Select>
             </div>
+          </div>
+          <div class="flex flex-col space-y-2">
+            <b>Status</b>
+            <Select v-model="transactionsStore.newTransaction.status">
+              <SelectTrigger class="w-full">
+                <SelectValue placeholder="Status..." />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="success"> Success </SelectItem>
+                  <SelectItem value="pending"> Pending </SelectItem>
+                  <SelectItem value="refunded"> Refunded </SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </div>
           <div class="flex flex-col space-y-2">
             <b>Created At</b>
@@ -112,10 +127,29 @@ function filterByCategory(categoryId: string) {
   setQueryVariable(
     `?page=1&startDate=${getQueryVariable(
       "startDate"
-    )}&endDate=${getQueryVariable("endDate")}&categoryId=${categoryId}`
+    )}&endDate=${getQueryVariable(
+      "endDate"
+    )}&categoryId=${categoryId}&status=${getQueryVariable("status")}`
   );
   transactionsStore.currentPage = 1;
-  transactionsStore.fetchTransactions(1, undefined, categoryId);
+  transactionsStore.fetchTransactions(
+    1,
+    undefined,
+    categoryId,
+    getQueryVariable("status")
+  );
+}
+
+function filterByStatus(status: string) {
+  setQueryVariable(
+    `?page=1&startDate=${getQueryVariable(
+      "startDate"
+    )}&endDate=${getQueryVariable("endDate")}&categoryId=${getQueryVariable(
+      "categoryId"
+    )}&status=${status}`
+  );
+  transactionsStore.currentPage = 1;
+  transactionsStore.fetchTransactions(1, undefined, undefined, status);
 }
 
 function prepareFilter() {
@@ -126,6 +160,12 @@ watch(
   () => transactionsStore.getSelectedCategoryIdFilter,
   (newValue) => {
     filterByCategory(newValue);
+  }
+);
+watch(
+  () => transactionsStore.getSelectedStatusFilter,
+  (newValue) => {
+    filterByStatus(newValue);
   }
 );
 </script>
