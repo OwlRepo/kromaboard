@@ -22,6 +22,7 @@ export const useTransactionsStore = defineStore("transactions", {
     categories: null,
     products: null,
     pageCount: null,
+    currentPage: 1,
     transactions: null,
     transactionCount: 0,
     defaultPage: Number(getQueryVariable("page")) || 1,
@@ -29,7 +30,11 @@ export const useTransactionsStore = defineStore("transactions", {
     reloading: false,
     errorMessage: "",
   }),
-  getters: {},
+  getters: {
+    getSelectedCategoryIdFilter: (state) => {
+      return state.newTransaction.categoryId;
+    },
+  },
   actions: {
     async createNewTransaction() {
       this.reloading = true;
@@ -64,16 +69,19 @@ export const useTransactionsStore = defineStore("transactions", {
       date = {
         start: getQueryVariable("startDate"),
         end: getQueryVariable("endDate"),
-      }
+      },
+      categoryId = getQueryVariable("categoryId") === "undefined"
+        ? undefined
+        : getQueryVariable("categoryId")
     ) {
       this.loading = true;
-      this.fetchTransactionsCount(date);
+      this.fetchTransactionsCount(date, categoryId);
 
       setQueryVariable(
-        `?page=${page}&startDate=${date.start}&endDate=${date.end}`
+        `?page=${page}&startDate=${date.start}&endDate=${date.end}&categoryId=${categoryId}`
       );
 
-      const { data: transactions, error } = await supabase
+      const res = supabase
         .from("transaction_history")
         .select("*")
         .range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1)
@@ -81,25 +89,32 @@ export const useTransactionsStore = defineStore("transactions", {
         .lte("created_at", date.end)
         .order("created_at", { ascending: false });
 
-      if (!error) {
-        this.transactions = transactions;
+      if (categoryId) {
+        res.eq("category_id", categoryId);
+      }
+
+      if (!(await res).error) {
+        this.transactions = (await res).data;
         this.loading = false;
       } else {
-        this.errorMessage = error.message;
+        this.errorMessage = (await res).error.message;
       }
     },
-    async fetchTransactionsCount(date: any) {
-      const { data: _, count: transactionCount } = await supabase
+    async fetchTransactionsCount(date: any, categoryId?: string) {
+      const res = supabase
         .from("transaction_history")
         .select("*", { count: "exact", head: true })
         .gte("created_at", date.start)
         .lte("created_at", date.end);
 
-      if (!transactionCount) {
+      if (categoryId) {
+        res.eq("category_id", categoryId);
+      }
+      if ((await res).error) {
         this.pageCount = 0;
       } else {
-        this.transactionCount = transactionCount;
-        this.pageCount = Math.ceil(transactionCount / PAGE_SIZE);
+        this.transactionCount = (await res).count;
+        this.pageCount = Math.ceil((await res).count / PAGE_SIZE);
       }
     },
 
@@ -142,6 +157,17 @@ export const useTransactionsStore = defineStore("transactions", {
       } else {
         this.errorMessage = error.message;
       }
+    },
+    resetFilters() {
+      this.newTransaction = {
+        categoryId: "",
+        product: "",
+        price: null,
+        profit: null,
+        quantity: null,
+        status: null,
+        remarks: null,
+      };
     },
   },
 });

@@ -90,17 +90,21 @@
       <Pagination
         v-if="transactionsStore?.transactions?.length > 0"
         class="ml-auto w-fit mt-5"
-        v-slot="{ page }"
+        v-model:page="transactionsStore.currentPage"
         :total="transactionsStore.transactionCount"
         show-edges
-        :default-page="Number(getQueryVariable('page'))"
+        :default-page="1"
       >
         <PaginationList v-slot="{ items }" class="flex items-center gap-1">
           <PaginationFirst
             @click.prevent="transactionsStore.fetchTransactions(1)"
           />
           <PaginationPrev
-            @click.prevent="transactionsStore.fetchTransactions(page - 1)"
+            @click.prevent="
+              transactionsStore.fetchTransactions(
+                transactionsStore.currentPage - 1
+              )
+            "
           />
 
           <template v-for="(item, index) in items">
@@ -112,7 +116,11 @@
             >
               <Button
                 class="w-10 h-10 p-0"
-                :variant="item.value === page ? 'default' : 'outline'"
+                :variant="
+                  item.value === transactionsStore.currentPage
+                    ? 'default'
+                    : 'outline'
+                "
                 @click.prevent="transactionsStore.fetchTransactions(item.value)"
               >
                 {{ item.value }}
@@ -122,7 +130,11 @@
           </template>
 
           <PaginationNext
-            @click.prevent="transactionsStore.fetchTransactions(page + 1)"
+            @click.prevent="
+              transactionsStore.fetchTransactions(
+                transactionsStore.currentPage + 1
+              )
+            "
           />
           <PaginationLast
             @click.prevent="
@@ -152,14 +164,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import dayjs from "dayjs";
-import {
-  AlertCircle,
-  CheckCircle,
-  CircleX,
-  PackageSearch,
-} from "lucide-vue-next";
+import { AlertCircle, CircleX, PackageSearch } from "lucide-vue-next";
 import EditTransaction from "./modals/EditTransaction.vue";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import Alert from "@/components/ui/alert/Alert.vue";
 import AlertTitle from "@/components/ui/alert/AlertTitle.vue";
 import AlertDescription from "@/components/ui/alert/AlertDescription.vue";

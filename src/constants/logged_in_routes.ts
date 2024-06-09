@@ -18,7 +18,7 @@ const LOGGED_IN_ROUTES: Array<LoggedInRoute> = [
     path: `/transactions?page=1&startDate=${dayjs()
       .startOf("day")
       .subtract(3, "days")
-      .format()}&endDate=${dayjs().endOf("day").format()}`,
+      .format()}&endDate=${dayjs().endOf("day").format()}&categoryId=`,
     icon: DollarSign,
   },
   {
