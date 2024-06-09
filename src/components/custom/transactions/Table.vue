@@ -7,7 +7,10 @@
           Recent transactions from your store.
         </CardDescription>
       </div>
-      <CreateTransaction />
+      <div class="flex flex-row space-x-5">
+        <FilterTable />
+        <CreateTransaction />
+      </div>
     </CardHeader>
     <CardContent>
       <Alert
@@ -174,6 +177,7 @@ import {
 import { Button } from "@/components/ui/button";
 import getQueryVariable from "@/lib/helpers/getQueryVariable";
 import CreateTransaction from "./modals/CreateTransaction.vue";
+import FilterTable from "./modals/FilterTable.vue";
 import { useTransactionsStore } from "@/stores/transactions";
 import Badge from "@/components/ui/badge/Badge.vue";
 
