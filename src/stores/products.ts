@@ -127,5 +127,16 @@ export const useProductsStore = defineStore("products", {
         this.errorMessage = error.message;
       }
     },
+    async fetchProductsByCategoryId(id: string) {
+      const { data: products, error } = await supabase
+        .from("products")
+        .select("*")
+        .eq("category", id);
+      if (!error) {
+        this.products = products;
+      } else {
+        this.errorMessage = error.message;
+      }
+    },
   },
 });

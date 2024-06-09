@@ -172,8 +172,8 @@ const defaultForm = {
   product: "",
   price: null,
   profit: null,
-  quantity: null,
-  status: null,
+  quantity: 1,
+  status: "success",
   remarks: null,
 };
 

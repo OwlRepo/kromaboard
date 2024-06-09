@@ -179,7 +179,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import Select from "@/components/ui/select/Select.vue";
 import SelectTrigger from "@/components/ui/select/SelectTrigger.vue";
 import SelectValue from "@/components/ui/select/SelectValue.vue";
@@ -205,4 +205,13 @@ const props = defineProps({
     required: true,
   },
 });
+
+watch(
+  () => [transactionsStore.transactions[props.index].category_id],
+  () => {
+    transactionsStore.fetchProductsByCategoryId(
+      transactionsStore.transactions[props.index].category_id
+    );
+  }
+);
 </script>
