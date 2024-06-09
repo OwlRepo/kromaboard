@@ -20,8 +20,8 @@ export const useTransactionsStore = defineStore("transactions", {
       remarks: null,
     },
     filter: {
-      categoryId: null,
-      status: null,
+      categoryId: "",
+      status: "",
     },
     categories: null,
     products: null,
@@ -183,8 +183,8 @@ export const useTransactionsStore = defineStore("transactions", {
     },
     resetFilters() {
       this.filter = {
-        categoryId: null,
-        status: null,
+        categoryId: "",
+        status: "",
       };
     },
   },
