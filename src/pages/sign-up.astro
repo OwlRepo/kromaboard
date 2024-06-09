@@ -3,12 +3,13 @@ import SignUpForm from "@/components/custom/form/SignUp.vue";
 import "@/styles/globals.css";
 import { ViewTransitions } from "astro:transitions";
 import Default from "@/layouts/Default.astro";
+import Basehead from "@/components/custom/basehead.astro";
 ---
 
 <html lang="en">
   <head>
     <title>Sign Up | KromaBoard</title>
-    <meta charset="UTF-8" />
+    <Basehead />
     <ViewTransitions />
   </head>
   <Default>
