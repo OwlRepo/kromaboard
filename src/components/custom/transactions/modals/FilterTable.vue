@@ -104,10 +104,7 @@ const transactionsStore = useTransactionsStore();
 const defualtCategoryPageRoute = LOGGED_IN_ROUTES.find((route) =>
   route.path.includes("transactions")
 );
-const defaultForm = {
-  categoryId: null,
-  status: null,
-};
+
 function filterByDate(data: any) {
   const date = {
     start: dayjs(`${data.start.year}-${data.start.month}-${data.start.day}`)
