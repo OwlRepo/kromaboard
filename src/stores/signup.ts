@@ -21,7 +21,7 @@ export const useSignUpStore = defineStore("sign-up", {
       });
 
       if (!validators.validateEmail(this.email)) {
-        this.errorMessage = "Invalid email";
+        this.errorMessage = "Unable to validate email address: invalid format";
         return;
       }
 

@@ -1,27 +1,6 @@
-<script setup lang="ts">
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { useForgotPassword } from "@/stores/forgotpassword";
-import { onMounted } from "vue";
-
-const forgotPasswordStore = useForgotPassword();
-
-onMounted(() => {
-  forgotPasswordStore.$reset();
-});
-</script>
-
 <template>
   <div class="flex items-center justify-center py-12 min-h-[100vh]">
-    <Card class="mx-auto max-w-sm">
+    <Card class="mx-auto w-full max-w-lg">
       <CardHeader>
         <CardTitle class="text-xl"> Forgot Password </CardTitle>
         <CardDescription>
@@ -40,15 +19,20 @@ onMounted(() => {
               v-model="forgotPasswordStore.email"
             />
           </div>
-          <a href="/">
-            <Button
-              type="submit"
-              class="w-full"
-              @click="forgotPasswordStore.userForgotPassword"
-            >
-              Submit
-            </Button>
-          </a>
+          <Alert v-if="forgotPasswordStore.errorMessage" variant="destructive">
+            <AlertCircle class="w-4 h-4" />
+            <AlertTitle>Oops!</AlertTitle>
+            <AlertDescription>
+              {{ forgotPasswordStore.errorMessage }}
+            </AlertDescription>
+          </Alert>
+          <Button
+            type="submit"
+            class="w-full"
+            @click="forgotPasswordStore.userForgotPassword"
+          >
+            Submit
+          </Button>
         </div>
         <div class="mt-4 text-center text-sm">
           Already have an account?
@@ -58,3 +42,26 @@ onMounted(() => {
     </Card>
   </div>
 </template>
+
+<script setup lang="ts">
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { useForgotPassword } from "@/stores/forgotpassword";
+import { onMounted } from "vue";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { AlertCircle } from "lucide-vue-next";
+
+const forgotPasswordStore = useForgotPassword();
+
+onMounted(() => {
+  forgotPasswordStore.$reset();
+});
+</script>
