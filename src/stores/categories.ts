@@ -44,26 +44,16 @@ export const useCategoriesStore = defineStore("categories", {
         this.errorMessage = error.message;
       }
     },
-    async fetchCategories(
-      page = Number(getQueryVariable("page")),
-      date = {
-        start: getQueryVariable("startDate"),
-        end: getQueryVariable("endDate"),
-      }
-    ) {
+    async fetchCategories(page = Number(getQueryVariable("page"))) {
       this.loading = true;
-      this.fetchCategoryCount(date);
+      this.fetchCategoryCount();
 
-      setQueryVariable(
-        `?page=${page}&startDate=${date.start}&endDate=${date.end}`
-      );
+      setQueryVariable(`?page=${page}`);
 
       const { data: categories, error } = await supabase
         .from("categories")
         .select("*")
         .range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1)
-        .gte("created_at", date.start)
-        .lte("created_at", date.end)
         .order("created_at", { ascending: false });
 
       if (!error) {
@@ -73,12 +63,10 @@ export const useCategoriesStore = defineStore("categories", {
         this.errorMessage = error.message;
       }
     },
-    async fetchCategoryCount(date: any) {
+    async fetchCategoryCount() {
       const { data: _, count: categoryCount } = await supabase
         .from("categories")
-        .select("*", { count: "exact", head: true })
-        .gte("created_at", date.start)
-        .lte("created_at", date.end);
+        .select("*", { count: "exact", head: true });
 
       if (!categoryCount) {
         this.pageCount = 0;

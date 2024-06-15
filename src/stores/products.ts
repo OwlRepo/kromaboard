@@ -53,26 +53,16 @@ export const useProductsStore = defineStore("products", {
         this.errorMessage = error.message;
       }
     },
-    async fetchProducts(
-      page = Number(getQueryVariable("page")),
-      date = {
-        start: getQueryVariable("startDate"),
-        end: getQueryVariable("endDate"),
-      }
-    ) {
+    async fetchProducts(page = Number(getQueryVariable("page"))) {
       this.loading = true;
-      this.fetchProductCount(date);
+      this.fetchProductCount();
 
-      setQueryVariable(
-        `?page=${page}&startDate=${date.start}&endDate=${date.end}`
-      );
+      setQueryVariable(`?page=${page}`);
 
       const { data: products, error } = await supabase
         .from("products")
         .select("*")
         .range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1)
-        .gte("created_at", date.start)
-        .lte("created_at", date.end)
         .order("created_at", { ascending: false });
 
       if (!error) {
@@ -82,12 +72,10 @@ export const useProductsStore = defineStore("products", {
         this.errorMessage = error.message;
       }
     },
-    async fetchProductCount(date: any) {
+    async fetchProductCount() {
       const { data: _, count: productCount } = await supabase
         .from("products")
-        .select("*", { count: "exact", head: true })
-        .gte("created_at", date.start)
-        .lte("created_at", date.end);
+        .select("*", { count: "exact", head: true });
 
       if (!productCount) {
         this.pageCount = 0;
