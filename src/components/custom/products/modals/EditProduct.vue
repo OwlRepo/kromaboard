@@ -165,8 +165,4 @@ defineProps({
     required: true,
   },
 });
-
-onUnmounted(() => {
-  productStore.$reset();
-});
 </script>

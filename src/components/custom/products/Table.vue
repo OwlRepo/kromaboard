@@ -74,7 +74,7 @@
       <Pagination
         v-if="productsStore?.products?.length > 0"
         class="ml-auto w-fit mt-5"
-        v-slot="{ page }"
+        v-model:page="productsStore.currentPage"
         :total="productsStore.productCount"
         show-edges
         :default-page="Number(getQueryVariable('page'))"
@@ -82,7 +82,9 @@
         <PaginationList v-slot="{ items }" class="flex items-center gap-1">
           <PaginationFirst @click.prevent="productsStore.fetchProducts(1)" />
           <PaginationPrev
-            @click.prevent="productsStore.fetchProducts(page - 1)"
+            @click.prevent="
+              productsStore.fetchProducts(productsStore.currentPage - 1)
+            "
           />
 
           <template v-for="(item, index) in items">
@@ -94,7 +96,11 @@
             >
               <Button
                 class="w-10 h-10 p-0"
-                :variant="item.value === page ? 'default' : 'outline'"
+                :variant="
+                  item.value === productsStore.currentPage
+                    ? 'default'
+                    : 'outline'
+                "
                 @click.prevent="productsStore.fetchProducts(item.value)"
               >
                 {{ item.value }}
@@ -104,7 +110,9 @@
           </template>
 
           <PaginationNext
-            @click.prevent="productsStore.fetchProducts(page + 1)"
+            @click.prevent="
+              productsStore.fetchProducts(productsStore.currentPage + 1)
+            "
           />
           <PaginationLast
             @click.prevent="
