@@ -17,6 +17,7 @@ export const useProductsStore = defineStore("products", {
       is_active: true,
     },
     productCategories: null,
+    currentPage: Number(getQueryVariable("page")) || 1,
     pageCount: null,
     products: null,
     productCount: 0,

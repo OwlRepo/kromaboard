@@ -101,8 +101,4 @@ defineProps({
     required: true,
   },
 });
-
-onUnmounted(() => {
-  categoriesStore.$reset();
-});
 </script>

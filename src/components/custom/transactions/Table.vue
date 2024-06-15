@@ -93,7 +93,7 @@
         v-model:page="transactionsStore.currentPage"
         :total="transactionsStore.transactionCount"
         show-edges
-        :default-page="1"
+        :default-page="Number(getQueryVariable('page'))"
       >
         <PaginationList v-slot="{ items }" class="flex items-center gap-1">
           <PaginationFirst

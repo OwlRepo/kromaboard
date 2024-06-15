@@ -20,14 +20,14 @@
             id="category_name"
             type="text"
             placeholder="Category Name..."
-            v-model="categoriesStore.newCategoryName"
+            v-model="categoriesStore.newCategory.name"
             required
           />
         </div>
         <div class="flex items-center space-x-2">
           <Switch
             id="airplane-mode"
-            v-model:checked="categoriesStore.isActive"
+            v-model:checked="categoriesStore.newCategory.isActive"
           />
           <Label for="airplane-mode">Active</Label>
         </div>
@@ -65,7 +65,7 @@ import getQueryVariable from "@/lib/helpers/getQueryVariable";
 
 const categoriesStore = useCategoriesStore();
 const defaultForm = {
-  newCategoryName: "",
+  name: "",
   isActive: true,
 };
 
@@ -74,6 +74,6 @@ onUnmounted(() => {
 });
 
 function prepareForm() {
-  categoriesStore.$state = { ...defaultForm };
+  categoriesStore.newCategory = { ...defaultForm };
 }
 </script>

@@ -26,7 +26,7 @@ export const useTransactionsStore = defineStore("transactions", {
     categories: null,
     products: null,
     pageCount: null,
-    currentPage: 1,
+    currentPage: Number(getQueryVariable("page")) || 1,
     transactions: null,
     transactionCount: 0,
     defaultPage: Number(getQueryVariable("page")) || 1,
