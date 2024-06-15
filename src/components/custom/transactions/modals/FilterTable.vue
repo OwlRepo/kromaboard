@@ -121,7 +121,9 @@ function filterByDate(data: any) {
   setQueryVariable(
     `?page=1&startDate=${date.start}&endDate=${
       date.end
-    }&categoryId=${getQueryVariable("categoryId")}`
+    }&categoryId=${getQueryVariable("categoryId")}&status=${getQueryVariable(
+      "status"
+    )}`
   );
   transactionsStore.currentPage = 1;
   transactionsStore.fetchTransactions(1, date, getQueryVariable("categoryId"));
