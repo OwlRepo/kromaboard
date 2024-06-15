@@ -1,58 +1,14 @@
-<script setup lang="ts">
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { useSignUpStore } from "@/stores/signup";
-import { onMounted, ref } from "vue";
-import { Eye, EyeOff } from "lucide-vue-next";
-
-const signUpStore = useSignUpStore();
-const showPassword = ref(false);
-const showConfirmPassword = ref(false);
-
-onMounted(() => {
-  signUpStore.$reset();
-});
-</script>
-
 <template>
-  <div class="flex items-center justify-center py-12 min-h-[100vh]">
-    <Card class="mx-auto max-w-sm">
+  <div class="flex flex-col items-stretch justify-center py-12 min-h-[100vh]">
+    <Card class="mx-auto w-full max-w-lg">
       <CardHeader>
         <CardTitle class="text-xl"> Sign Up </CardTitle>
         <CardDescription>
           Enter your information to create an account
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent class="w-full">
         <div class="grid gap-4">
-          <div class="grid grid-cols-2 gap-4">
-            <div class="grid gap-2">
-              <Label for="first-name">First name</Label>
-              <Input
-                id="first-name"
-                placeholder="Max"
-                required
-                v-model="signUpStore.firstName"
-              />
-            </div>
-            <div class="grid gap-2">
-              <Label for="last-name">Last name</Label>
-              <Input
-                id="last-name"
-                placeholder="Robinson"
-                required
-                v-model="signUpStore.lastName"
-              />
-            </div>
-          </div>
           <div class="grid gap-2">
             <Label for="email">Email</Label>
             <Input
@@ -82,32 +38,34 @@ onMounted(() => {
             </div>
           </div>
           <div class="grid gap-2">
-            <Label for="confirm-password">Confirm Password</Label>
+            <Label for="password">Confirm Password</Label>
             <div class="flex items-stretch space-x-2">
               <Input
                 id="password"
-                :type="showConfirmPassword ? 'text' : 'password'"
+                :type="showPassword ? 'text' : 'password'"
                 required
                 v-model="signUpStore.confirmPassword"
               />
               <Button
-                name="show-hide-confirm-password-toggle"
-                @click="showConfirmPassword = !showConfirmPassword"
+                aria-label="show-hide-new-password-toggle"
+                @click="showPassword = !showPassword"
               >
-                <Eye v-if="showConfirmPassword" class="w-4 h-4" />
+                <Eye v-if="showPassword" class="w-4 h-4" />
                 <EyeOff v-else class="w-4 h-4" />
               </Button>
             </div>
           </div>
-          <a href="/">
-            <Button
-              type="submit"
-              class="w-full"
-              @click="signUpStore.userSignUp"
-            >
-              Create Account
-            </Button>
-          </a>
+
+          <Alert v-if="signUpStore.errorMessage" variant="destructive">
+            <AlertCircle class="w-4 h-4" />
+            <AlertTitle>Oops!</AlertTitle>
+            <AlertDescription>
+              {{ signUpStore.errorMessage }}
+            </AlertDescription>
+          </Alert>
+          <Button type="submit" class="w-full" @click="signUpStore.userSignUp">
+            Create Account
+          </Button>
         </div>
         <div class="mt-4 text-center text-sm">
           Already have an account?
@@ -117,3 +75,27 @@ onMounted(() => {
     </Card>
   </div>
 </template>
+<script setup lang="ts">
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { useSignUpStore } from "@/stores/signup";
+import { onMounted, ref } from "vue";
+import { AlertCircle, Eye, EyeOff } from "lucide-vue-next";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+
+const signUpStore = useSignUpStore();
+const showPassword = ref(false);
+const showConfirmPassword = ref(false);
+
+onMounted(() => {
+  signUpStore.$reset();
+});
+</script>
