@@ -12,7 +12,7 @@ export const useForgotPassword = defineStore("forgot-password", {
   getters: {},
   actions: {
     async userForgotPassword() {
-      let { data, error } = await supabase.auth.resetPasswordForEmail(
+      let { data: _, error } = await supabase.auth.resetPasswordForEmail(
         this.email
       );
 
