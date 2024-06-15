@@ -1,15 +1,5 @@
 <script setup lang="ts">
-import { Bell, Package2, Search } from "lucide-vue-next";
-
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { Package2 } from "lucide-vue-next";
 import { supabase } from "@/lib/supabase";
 import { onMounted } from "vue";
 const { data } = await supabase.auth.getSession();
