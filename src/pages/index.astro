@@ -3,13 +3,12 @@ import Login from "@/components/custom/form/Login.vue";
 import "@/styles/globals.css";
 import { ViewTransitions } from "astro:transitions";
 import Default from "@/layouts/Default.astro";
-import Basehead from "@/components/custom/basehead.astro";
+import Basehead from "@/components/custom/BaseHead.astro";
 ---
 
 <html lang="en">
   <head>
-    <title>KromaBoard</title>
-    <Basehead />
+    <Basehead title="Login" />
     <ViewTransitions />
   </head>
   <Default>

@@ -2,14 +2,13 @@
 import "@/styles/globals.css";
 import Dashboard from "@/layouts/Dashboard.astro";
 import { Header } from "@/components/custom/dashboard";
-import Basehead from "@/components/custom/basehead.astro";
+import Basehead from "@/components/custom/BaseHead.astro";
 import UnderConstruction from "@/components/custom/placeholders/UnderConstruction.vue";
 ---
 
 <html lang="en">
   <head>
-    <title>Dashboard | KromaBoard</title>
-    <Basehead />
+    <Basehead title="Dashboard" />
   </head>
   <body>
     <Dashboard>
