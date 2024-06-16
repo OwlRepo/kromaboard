@@ -22,8 +22,10 @@
     </DialogTrigger>
     <DialogContent class="max-w-[90vw] lg:max-w-[50vw] rounded-lg">
       <DialogHeader>
-        <DialogTitle>Edit Category</DialogTitle>
-        <DialogDescription> Edit the category name. </DialogDescription>
+        <DialogTitle>Edit Transaction</DialogTitle>
+        <DialogDescription>
+          Edit the tranasction information.
+        </DialogDescription>
       </DialogHeader>
       <div class="grid gap-4 py-4">
         <div class="grid gap-2">

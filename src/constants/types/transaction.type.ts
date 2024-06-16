@@ -10,4 +10,13 @@ export type Transaction = {
   remarks: string;
   status: string;
   transaction_amount: number;
+  categories: Category;
+};
+
+export type Category = {
+  name: string;
+  created_at: string;
+  created_by: string;
+  id: string;
+  is_active: boolean;
 };
