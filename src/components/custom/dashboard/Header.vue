@@ -1,6 +1,15 @@
 <script setup>
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Activity, CreditCard, DollarSign, Users } from "lucide-vue-next";
+import { useDashboardStore } from "@/stores/dashboard";
+import { onMounted } from "vue";
+import dayjs from "dayjs";
+import formatCurrencyToPHP from "@/lib/helpers/formateCurrencyToPHP";
+const dashboardStore = useDashboardStore();
+
+onMounted(() => {
+  dashboardStore.fetchTotalRevenue();
+});
 </script>
 
 <template>
@@ -9,48 +18,80 @@ import { Activity, CreditCard, DollarSign, Users } from "lucide-vue-next";
       <CardHeader
         class="flex flex-row items-center justify-between space-y-0 pb-2"
       >
-        <CardTitle class="text-sm font-medium"> Total Revenue </CardTitle>
-        <DollarSign class="h-4 w-4 text-muted-foreground" />
+        <CardTitle class="text-sm font-medium"> Annual Revenue </CardTitle>
       </CardHeader>
       <CardContent>
-        <div class="text-2xl font-bold">$45,231.89</div>
-        <p class="text-xs text-muted-foreground">+20.1% from last month</p>
+        <div class="text-2xl font-bold">
+          {{ formatCurrencyToPHP(dashboardStore.annualRevenue?.total_sum) }}
+        </div>
+        <p class="text-xs text-muted-foreground">
+          from
+          {{
+            new dayjs(dashboardStore.annualRevenue?.date).format(
+              "MMMM DD, YYYY"
+            )
+          }}
+        </p>
       </CardContent>
     </Card>
     <Card>
       <CardHeader
         class="flex flex-row items-center justify-between space-y-0 pb-2"
       >
-        <CardTitle class="text-sm font-medium"> Current Balance </CardTitle>
-        <Users class="h-4 w-4 text-muted-foreground" />
+        <CardTitle class="text-sm font-medium"> Monthly Revenue </CardTitle>
       </CardHeader>
       <CardContent>
-        <div class="text-2xl font-bold">+2350</div>
-        <p class="text-xs text-muted-foreground">+180.1% from last month</p>
+        <div class="text-2xl font-bold">
+          {{ formatCurrencyToPHP(dashboardStore.monthlyRevenue?.total_sum) }}
+        </div>
+        <p class="text-xs text-muted-foreground">
+          from
+          {{
+            new dayjs(dashboardStore.monthlyRevenue?.date).format(
+              "MMMM DD, YYYY"
+            )
+          }}
+        </p>
       </CardContent>
     </Card>
     <Card>
       <CardHeader
         class="flex flex-row items-center justify-between space-y-0 pb-2"
       >
-        <CardTitle class="text-sm font-medium"> Sales </CardTitle>
-        <CreditCard class="h-4 w-4 text-muted-foreground" />
+        <CardTitle class="text-sm font-medium"> Weekly Revenue </CardTitle>
       </CardHeader>
       <CardContent>
-        <div class="text-2xl font-bold">+12,234</div>
-        <p class="text-xs text-muted-foreground">+19% from last month</p>
+        <div class="text-2xl font-bold">
+          {{ formatCurrencyToPHP(dashboardStore.weeklyRevenue?.total_sum) }}
+        </div>
+        <p class="text-xs text-muted-foreground">
+          from
+          {{
+            new dayjs(dashboardStore.weeklyRevenue?.date).format(
+              "MMMM DD, YYYY"
+            )
+          }}
+        </p>
       </CardContent>
     </Card>
     <Card>
       <CardHeader
         class="flex flex-row items-center justify-between space-y-0 pb-2"
       >
-        <CardTitle class="text-sm font-medium"> Active Now </CardTitle>
-        <Activity class="h-4 w-4 text-muted-foreground" />
+        <CardTitle class="text-sm font-medium"> Daily Revenue </CardTitle>
       </CardHeader>
       <CardContent>
-        <div class="text-2xl font-bold">+573</div>
-        <p class="text-xs text-muted-foreground">+201 since last hour</p>
+        <div class="text-2xl font-bold">
+          {{ formatCurrencyToPHP(dashboardStore.yesterdayRevenue?.total_sum) }}
+        </div>
+        <p class="text-xs text-muted-foreground">
+          from
+          {{
+            new dayjs(dashboardStore.yesterdayRevenue?.date).format(
+              "MMMM DD, YYYY"
+            )
+          }}
+        </p>
       </CardContent>
     </Card>
   </div>

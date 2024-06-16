@@ -2,21 +2,16 @@
 import "@/styles/globals.css";
 import Dashboard from "@/layouts/Dashboard.astro";
 import { Filter, Table } from "@/components/custom/categories";
-import Basehead from "@/components/custom/basehead.astro";
+import BaseHeader from "@/components/custom/BaseHeader.astro";
 ---
 
 <html lang="en">
   <head>
-    <title>Category | KromaBoard</title>
-    <Basehead />
+    <BaseHeader title="Categories" />
   </head>
   <body>
     <Dashboard>
-      <div class="flex flex-col-reverse lg:flex-row w-full lg:space-x-5">
-        <div class="flex-[1] w-full">
-          <Table client:only="vue" />
-        </div>
-      </div>
+      <Table client:only="vue" />
     </Dashboard>
   </body>
 </html>
