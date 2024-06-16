@@ -59,23 +59,6 @@ onMounted(() => {
         class="flex justify-between h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6"
       >
         <slot name="mobile-nav-sheet" />
-        <!-- <div class="w-full flex-1">
-          <form>
-            <div class="relative">
-              <Search
-                class="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground"
-              />
-              <label for="search"></label>
-              <Input
-                name="search"
-                type="search"
-                placeholder="Search products..."
-                aria-label="search"
-                class="w-full appearance-none bg-background pl-8 shadow-none"
-              />
-            </div>
-          </form>
-        </div> -->
         <slot name="user-dropdown-menu" />
       </header>
       <main class="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 bg-muted">
