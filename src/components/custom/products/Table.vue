@@ -22,7 +22,8 @@
       <Table v-if="productsStore?.products?.length > 0">
         <TableHeader>
           <TableRow class="bg-muted">
-            <TableHead class="text-black">Name</TableHead>
+            <TableHead class="text-black">Product</TableHead>
+            <TableHead class="text-black">Category</TableHead>
             <TableHead class="text-black">Price</TableHead>
             <TableHead class="text-black">Profit</TableHead>
             <TableHead class="text-black">Created At</TableHead>
@@ -37,6 +38,9 @@
           >
             <TableCell class="font-bold overflow-auto max-w-[300px]">
               {{ product.name }}
+            </TableCell>
+            <TableCell class="font-bold overflow-auto max-w-[300px]">
+              {{ product?.categories?.name }}
             </TableCell>
             <TableCell class="font-bold overflow-auto max-w-[300px]">
               {{ product.price }}

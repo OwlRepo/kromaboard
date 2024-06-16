@@ -7,6 +7,10 @@ import { defineStore } from "pinia";
 
 const PAGE_SIZE = 10;
 
+function removeUnwantedFormValues(product: Product) {
+  product.categories = undefined;
+}
+
 export const useProductsStore = defineStore("products", {
   state: () => ({
     newProduct: {
@@ -62,7 +66,7 @@ export const useProductsStore = defineStore("products", {
 
       const { data: products, error } = await supabase
         .from("products")
-        .select("*")
+        .select("*, categories(*)")
         .range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1)
         .order("created_at", { ascending: false });
 
@@ -86,6 +90,7 @@ export const useProductsStore = defineStore("products", {
       }
     },
     async updateProduct(product: Product) {
+      removeUnwantedFormValues(product);
       const { data: _, error } = await supabase
         .from("products")
         .update({
@@ -100,7 +105,7 @@ export const useProductsStore = defineStore("products", {
 
       if (!error) {
         this.reloading = false;
-        this.fetchCategories();
+        this.fetchProducts();
       } else {
         this.errorMessage = error.message;
       }

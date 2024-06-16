@@ -26,8 +26,8 @@
     </DialogTrigger>
     <DialogContent class="max-w-[90vw] lg:max-w-[50vw] rounded-lg">
       <DialogHeader>
-        <DialogTitle>Edit Category</DialogTitle>
-        <DialogDescription> Edit the category name. </DialogDescription>
+        <DialogTitle>Edit Product</DialogTitle>
+        <DialogDescription> Edit the product information. </DialogDescription>
       </DialogHeader>
       <div class="grid gap-4 py-4">
         <div class="grid gap-2">
@@ -35,7 +35,7 @@
             >Select Category
             <span class="text-red-400">*</span>
           </Label>
-          <Select v-model="productStore.products[index].category">
+          <Select v-model="productStore.products[index].category_id">
             <SelectTrigger class="w-full">
               <SelectValue placeholder="Category..." />
             </SelectTrigger>
