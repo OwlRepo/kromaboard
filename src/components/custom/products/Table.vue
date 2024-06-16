@@ -5,7 +5,10 @@
         <CardTitle>Products</CardTitle>
         <CardDescription> Recent products from your store. </CardDescription>
       </div>
-      <CreateProduct />
+      <div class="flex flex-row space-x-5">
+        <FilterTable />
+        <CreateProduct />
+      </div>
     </CardHeader>
     <CardContent>
       <Alert
@@ -173,6 +176,7 @@ import {
 import { Button } from "@/components/ui/button";
 import getQueryVariable from "@/lib/helpers/getQueryVariable";
 import { useProductsStore } from "@/stores/products";
+import FilterTable from "./modals/FilterTable.vue";
 const productsStore = useProductsStore();
 
 onMounted(() => {

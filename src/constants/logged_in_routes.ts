@@ -37,10 +37,7 @@ const LOGGED_IN_ROUTES: Array<LoggedInRoute> = [
   },
   {
     name: "Products",
-    path: `/products?page=1&startDate=${dayjs()
-      .startOf("day")
-      .subtract(3, "days")
-      .format()}&endDate=${dayjs().endOf("day").format()}`,
+    path: `/products?page=1&categoryId=`,
     icon: Package,
   },
   {
