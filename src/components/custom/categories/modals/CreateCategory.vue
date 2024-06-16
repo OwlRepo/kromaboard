@@ -34,7 +34,11 @@
       </div>
       <DialogFooter>
         <DialogClose as-child>
-          <Button type="submit" @click="categoriesStore.createNewCategory">
+          <Button
+            :disabled="!categoriesStore.newCategory.name"
+            type="submit"
+            @click="categoriesStore.createNewCategory"
+          >
             Submit
           </Button>
         </DialogClose>
