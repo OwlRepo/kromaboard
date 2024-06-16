@@ -45,6 +45,15 @@ export const useTransactionsStore = defineStore("transactions", {
     getSelectedStatusFilter: (state) => {
       return state.filter.status;
     },
+    getFormStatus: (state) => {
+      return (
+        !state.newTransaction.categoryId ||
+        !state.newTransaction.product ||
+        !state.newTransaction.price ||
+        !state.newTransaction.profit ||
+        !state.newTransaction.quantity
+      );
+    },
   },
   actions: {
     async createNewTransaction() {
