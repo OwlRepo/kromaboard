@@ -8,7 +8,7 @@ import formatCurrencyToPHP from "@/lib/helpers/formateCurrencyToPHP";
 const dashboardStore = useDashboardStore();
 
 onMounted(() => {
-  dashboardStore.fetchTotalRevenue();
+  dashboardStore.fetchTotalProfit();
 });
 </script>
 
@@ -18,16 +18,34 @@ onMounted(() => {
       <CardHeader
         class="flex flex-row items-center justify-between space-y-0 pb-2"
       >
-        <CardTitle class="text-sm font-medium"> Annual Revenue </CardTitle>
+        <CardTitle class="text-sm font-medium"> Annual Profit </CardTitle>
       </CardHeader>
       <CardContent>
         <div class="text-2xl font-bold">
-          {{ formatCurrencyToPHP(dashboardStore.annualRevenue?.total_sum) }}
+          {{ formatCurrencyToPHP(dashboardStore.annualProfit?.total_sum) }}
         </div>
         <p class="text-xs text-muted-foreground">
           from
           {{
-            new dayjs(dashboardStore.annualRevenue?.date).format(
+            new dayjs(dashboardStore.annualProfit?.date).format("MMMM DD, YYYY")
+          }}
+        </p>
+      </CardContent>
+    </Card>
+    <Card>
+      <CardHeader
+        class="flex flex-row items-center justify-between space-y-0 pb-2"
+      >
+        <CardTitle class="text-sm font-medium"> Monthly Profit </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div class="text-2xl font-bold">
+          {{ formatCurrencyToPHP(dashboardStore.monthlyProfit?.total_sum) }}
+        </div>
+        <p class="text-xs text-muted-foreground">
+          from
+          {{
+            new dayjs(dashboardStore.monthlyProfit?.date).format(
               "MMMM DD, YYYY"
             )
           }}
@@ -38,18 +56,16 @@ onMounted(() => {
       <CardHeader
         class="flex flex-row items-center justify-between space-y-0 pb-2"
       >
-        <CardTitle class="text-sm font-medium"> Monthly Revenue </CardTitle>
+        <CardTitle class="text-sm font-medium"> Weekly Profit </CardTitle>
       </CardHeader>
       <CardContent>
         <div class="text-2xl font-bold">
-          {{ formatCurrencyToPHP(dashboardStore.monthlyRevenue?.total_sum) }}
+          {{ formatCurrencyToPHP(dashboardStore.weeklyProfit?.total_sum) }}
         </div>
         <p class="text-xs text-muted-foreground">
           from
           {{
-            new dayjs(dashboardStore.monthlyRevenue?.date).format(
-              "MMMM DD, YYYY"
-            )
+            new dayjs(dashboardStore.weeklyProfit?.date).format("MMMM DD, YYYY")
           }}
         </p>
       </CardContent>
@@ -58,36 +74,16 @@ onMounted(() => {
       <CardHeader
         class="flex flex-row items-center justify-between space-y-0 pb-2"
       >
-        <CardTitle class="text-sm font-medium"> Weekly Revenue </CardTitle>
+        <CardTitle class="text-sm font-medium"> Daily Profit </CardTitle>
       </CardHeader>
       <CardContent>
         <div class="text-2xl font-bold">
-          {{ formatCurrencyToPHP(dashboardStore.weeklyRevenue?.total_sum) }}
+          {{ formatCurrencyToPHP(dashboardStore.yesterdayProfit?.total_sum) }}
         </div>
         <p class="text-xs text-muted-foreground">
           from
           {{
-            new dayjs(dashboardStore.weeklyRevenue?.date).format(
-              "MMMM DD, YYYY"
-            )
-          }}
-        </p>
-      </CardContent>
-    </Card>
-    <Card>
-      <CardHeader
-        class="flex flex-row items-center justify-between space-y-0 pb-2"
-      >
-        <CardTitle class="text-sm font-medium"> Daily Revenue </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div class="text-2xl font-bold">
-          {{ formatCurrencyToPHP(dashboardStore.yesterdayRevenue?.total_sum) }}
-        </div>
-        <p class="text-xs text-muted-foreground">
-          from
-          {{
-            new dayjs(dashboardStore.yesterdayRevenue?.date).format(
+            new dayjs(dashboardStore.yesterdayProfit?.date).format(
               "MMMM DD, YYYY"
             )
           }}
