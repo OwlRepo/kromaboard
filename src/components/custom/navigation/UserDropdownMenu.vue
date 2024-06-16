@@ -18,10 +18,12 @@ async function logout() {
     window.location.href = "/";
   }
 }
+
+const { data: user } = await supabase.auth.getUser();
 </script>
 
 <template>
-  <div>
+  <div class="flex flex-row space-x-2 items-center">
     <DropdownMenu>
       <DropdownMenuTrigger as-child>
         <Button variant="secondary" size="icon" class="rounded-full">
@@ -30,10 +32,14 @@ async function logout() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
-        <DropdownMenuSeparator />
+        <DropdownMenuLabel>
+          <p class="text-xs">
+            {{ user.user.email }}
+          </p></DropdownMenuLabel
+        >
+        <!-- <DropdownMenuSeparator />
         <DropdownMenuItem>Settings</DropdownMenuItem>
-        <DropdownMenuItem>Support</DropdownMenuItem>
+        <DropdownMenuItem>Support</DropdownMenuItem> -->
         <DropdownMenuSeparator />
         <DropdownMenuItem @click.prevent="logout()">Logout</DropdownMenuItem>
       </DropdownMenuContent>
