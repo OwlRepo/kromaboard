@@ -12,7 +12,7 @@ export const useDashboardStore = defineStore("dashboard", {
   }),
   getters: {},
   actions: {
-    async fetchTotalRevenue() {
+    async fetchTotalProfit() {
       const annualProfit = await supabase.rpc("get_annual_profit");
       const dailyRevenue = await supabase.rpc("get_daily_profit");
       const weeklyProfit = await supabase.rpc("get_weekly_profit");
