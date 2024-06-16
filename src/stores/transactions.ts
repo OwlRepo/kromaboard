@@ -8,6 +8,10 @@ import { defineStore } from "pinia";
 
 const PAGE_SIZE = 10;
 
+function removeUnwantedFormValues(transaction: Transaction) {
+  transaction.categories = undefined;
+}
+
 export const useTransactionsStore = defineStore("transactions", {
   state: () => ({
     newTransaction: {
@@ -93,7 +97,7 @@ export const useTransactionsStore = defineStore("transactions", {
 
       const res = supabase
         .from("transaction_history")
-        .select("*")
+        .select("*, categories(*)")
         .range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1)
         .gte("created_at", date.start)
         .lte("created_at", date.end)
@@ -142,6 +146,7 @@ export const useTransactionsStore = defineStore("transactions", {
     },
 
     async updateTransaction(transaction: Transaction) {
+      removeUnwantedFormValues(transaction);
       const { data: _, error } = await supabase
         .from("transaction_history")
         .update({
@@ -174,7 +179,7 @@ export const useTransactionsStore = defineStore("transactions", {
       const { data: products, error } = await supabase
         .from("products")
         .select("*")
-        .eq("category", id);
+        .eq("category_id", id);
       if (!error) {
         this.products = products;
       } else {

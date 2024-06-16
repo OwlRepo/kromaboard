@@ -7,6 +7,10 @@ import { defineStore } from "pinia";
 
 const PAGE_SIZE = 10;
 
+function removeUnwantedFormValues(product: Product) {
+  product.categories = undefined;
+}
+
 export const useProductsStore = defineStore("products", {
   state: () => ({
     newProduct: {
@@ -15,6 +19,9 @@ export const useProductsStore = defineStore("products", {
       price: null,
       profit: null,
       is_active: true,
+    },
+    filter: {
+      categoryId: getQueryVariable("categoryId"),
     },
     productCategories: null,
     currentPage: Number(getQueryVariable("page")) || 1,
@@ -26,7 +33,11 @@ export const useProductsStore = defineStore("products", {
     reloading: false,
     errorMessage: "",
   }),
-  getters: {},
+  getters: {
+    getSelectedCategoryIdFilter: (state) => {
+      return state.filter.categoryId;
+    },
+  },
   actions: {
     async createNewProduct() {
       this.reloading = true;
@@ -36,7 +47,7 @@ export const useProductsStore = defineStore("products", {
         .insert([
           {
             name: this.newProduct.name,
-            category: this.newProduct.category,
+            category_id: this.newProduct.category,
             price: this.newProduct.price ? this.newProduct.price : null,
             price_identifiable: this.newProduct.price ? true : false,
             profit: this.newProduct.profit ? this.newProduct.profit : null,
@@ -54,38 +65,52 @@ export const useProductsStore = defineStore("products", {
         this.errorMessage = error.message;
       }
     },
-    async fetchProducts(page = Number(getQueryVariable("page"))) {
+    async fetchProducts(
+      page = Number(getQueryVariable("page")),
+      categoryId = getQueryVariable("categoryId") === "undefined"
+        ? undefined
+        : getQueryVariable("categoryId")
+    ) {
       this.loading = true;
-      this.fetchProductCount();
+      this.fetchProductCount(categoryId);
 
-      setQueryVariable(`?page=${page}`);
+      setQueryVariable(`?page=${page}&categoryId=${categoryId}`);
 
-      const { data: products, error } = await supabase
+      const res = supabase
         .from("products")
-        .select("*")
+        .select("*, categories(*)")
         .range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1)
         .order("created_at", { ascending: false });
 
-      if (!error) {
-        this.products = products;
+      if (categoryId) {
+        res.eq("category_id", categoryId);
+      }
+
+      if (!(await res).error) {
+        this.products = (await res).data;
         this.loading = false;
       } else {
-        this.errorMessage = error.message;
+        this.errorMessage = (await res).error.message;
       }
     },
-    async fetchProductCount() {
-      const { data: _, count: productCount } = await supabase
+    async fetchProductCount(categoryId?: string) {
+      const res = supabase
         .from("products")
         .select("*", { count: "exact", head: true });
 
-      if (!productCount) {
-        this.pageCount = 0;
+      if (categoryId) {
+        res.eq("category_id", categoryId);
+      }
+
+      if (!(await res).error) {
+        this.productCount = (await res).count;
+        this.pageCount = Math.ceil((await res).count / PAGE_SIZE);
       } else {
-        this.productCount = productCount;
-        this.pageCount = Math.ceil(productCount / PAGE_SIZE);
+        this.pageCount = 0;
       }
     },
     async updateProduct(product: Product) {
+      removeUnwantedFormValues(product);
       const { data: _, error } = await supabase
         .from("products")
         .update({
@@ -100,7 +125,7 @@ export const useProductsStore = defineStore("products", {
 
       if (!error) {
         this.reloading = false;
-        this.fetchCategories();
+        this.fetchProducts();
       } else {
         this.errorMessage = error.message;
       }
@@ -116,16 +141,10 @@ export const useProductsStore = defineStore("products", {
         this.errorMessage = error.message;
       }
     },
-    async fetchProductsByCategoryId(id: string) {
-      const { data: products, error } = await supabase
-        .from("products")
-        .select("*")
-        .eq("category", id);
-      if (!error) {
-        this.products = products;
-      } else {
-        this.errorMessage = error.message;
-      }
+    resetFilters() {
+      this.filter = {
+        categoryId: "",
+      };
     },
   },
 });

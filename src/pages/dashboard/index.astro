@@ -11,7 +11,9 @@ import BaseHeader from "@/components/custom/BaseHeader.astro";
   </head>
   <body>
     <Dashboard>
-      <Header client:visible />
+      <div class="flex flex-col">
+        <Header client:visible />
+      </div>
     </Dashboard>
   </body>
 </html>

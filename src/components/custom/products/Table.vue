@@ -5,7 +5,10 @@
         <CardTitle>Products</CardTitle>
         <CardDescription> Recent products from your store. </CardDescription>
       </div>
-      <CreateProduct />
+      <div class="flex flex-row space-x-5">
+        <FilterTable />
+        <CreateProduct />
+      </div>
     </CardHeader>
     <CardContent>
       <Alert
@@ -22,7 +25,8 @@
       <Table v-if="productsStore?.products?.length > 0">
         <TableHeader>
           <TableRow class="bg-muted">
-            <TableHead class="text-black">Name</TableHead>
+            <TableHead class="text-black">Product</TableHead>
+            <TableHead class="text-black">Category</TableHead>
             <TableHead class="text-black">Price</TableHead>
             <TableHead class="text-black">Profit</TableHead>
             <TableHead class="text-black">Created At</TableHead>
@@ -37,6 +41,9 @@
           >
             <TableCell class="font-bold overflow-auto max-w-[300px]">
               {{ product.name }}
+            </TableCell>
+            <TableCell class="font-bold overflow-auto max-w-[300px]">
+              {{ product?.categories?.name }}
             </TableCell>
             <TableCell class="font-bold overflow-auto max-w-[300px]">
               {{ product.price }}
@@ -169,6 +176,7 @@ import {
 import { Button } from "@/components/ui/button";
 import getQueryVariable from "@/lib/helpers/getQueryVariable";
 import { useProductsStore } from "@/stores/products";
+import FilterTable from "./modals/FilterTable.vue";
 const productsStore = useProductsStore();
 
 onMounted(() => {

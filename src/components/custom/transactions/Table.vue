@@ -27,6 +27,7 @@
       <Table v-if="transactionsStore?.transactions?.length > 0">
         <TableHeader>
           <TableRow class="bg-muted">
+            <TableHead class="text-black">Category</TableHead>
             <TableHead class="text-black">Product</TableHead>
             <TableHead class="text-black">Created at</TableHead>
             <TableHead class="text-black">Price</TableHead>
@@ -42,6 +43,9 @@
             v-for="(transaction, index) in transactionsStore.transactions"
             :key="transaction.id"
           >
+            <TableCell class="font-bold overflow-auto max-w-[300px] uppercase">
+              {{ transaction?.categories?.name }}
+            </TableCell>
             <TableCell class="font-bold overflow-auto max-w-[300px] uppercase">
               {{ transaction.product_name }}
             </TableCell>
