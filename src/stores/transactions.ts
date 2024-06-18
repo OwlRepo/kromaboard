@@ -177,7 +177,9 @@ export const useTransactionsStore = defineStore("transactions", {
     async fetchCategories() {
       const { data: categories, error } = await supabase
         .from("categories")
-        .select("*");
+        .select("*")
+        .eq("is_active", true);
+
       if (!error) {
         this.categories = categories;
       } else {
@@ -188,7 +190,9 @@ export const useTransactionsStore = defineStore("transactions", {
       const { data: products, error } = await supabase
         .from("products")
         .select("*")
-        .eq("category_id", id);
+        .eq("category_id", id)
+        .eq("is_active", true);
+
       if (!error) {
         this.products = products;
       } else {
