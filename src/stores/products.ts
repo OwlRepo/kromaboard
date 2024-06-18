@@ -133,7 +133,9 @@ export const useProductsStore = defineStore("products", {
     async fetchCategories() {
       const { data: categories, error } = await supabase
         .from("categories")
-        .select("*");
+        .select("*")
+        .eq("is_active", true);
+
       if (!error) {
         this.productCategories = categories;
         this.loading = false;
