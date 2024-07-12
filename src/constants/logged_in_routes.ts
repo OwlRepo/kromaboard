@@ -40,11 +40,11 @@ const LOGGED_IN_ROUTES: Array<LoggedInRoute> = [
     path: `/products?page=1&categoryId=`,
     icon: Package,
   },
-  {
-    name: "Reports",
-    path: "/reports",
-    icon: LineChart,
-  },
+  // {
+  //   name: "Reports",
+  //   path: "/reports",
+  //   icon: LineChart,
+  // },
 ];
 
 export default LOGGED_IN_ROUTES;
