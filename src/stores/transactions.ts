@@ -78,6 +78,11 @@ export const useTransactionsStore = defineStore("transactions", {
         .select();
 
       if (!error) {
+        this.newTransaction.categoryId = "";
+        this.newTransaction.product = "";
+        this.newTransaction.price = null;
+        this.newTransaction.profit = null;
+        this.newTransaction.remarks = null;
         this.reloading = false;
         this.fetchTransactions();
       } else {
