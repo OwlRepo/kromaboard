@@ -130,6 +130,12 @@
         </div>
       </div>
       <DialogFooter>
+        <Button
+          :disabled="transactionsStore.getFormStatus"
+          @click.prevent="transactionsStore.createNewTransaction()"
+        >
+          Submit and create another one
+        </Button>
         <DialogClose as-child>
           <Button
             :disabled="transactionsStore.getFormStatus"
